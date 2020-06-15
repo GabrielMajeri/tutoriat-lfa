@@ -1,0 +1,64 @@
+\section*{Introducere}
+
+Cursul este destul de teoretic, iar la examen veți avea atât o parte de teorie cât și o parte de exerciții. Pentru teorie ar fi bine să știți \textbf{algebră} și câteva noțiuni legate de \textbf{grafuri} pentru că demonstrațiile conțin noțiuni din aceste materii.
+
+Laboratorul explorează aplicațiile \textbf{practice} ale noțiunilor discutate la curs, cum ar fi utilizarea \href{https://en.wikipedia.org/wiki/Regular_expression}{expresiilor regulate} pentru \href{https://docs.python.org/3/library/re.html}{căutarea în text}, sau importanța \href{https://en.wikipedia.org/wiki/Formal_grammar}{gramaticilor} în \href{https://en.wikipedia.org/wiki/LALR_parser}{compilatoare}.
+
+\newpage
+
+\section*{Notare}
+
+Acestea sunt câteva sfaturi practice legate de notarea la această materie (relevante în special pentru seria 13).
+
+\subsection*{Examen}
+
+Timpul alocat pentru rezolvarea subiectelor este \textbf{2 ore}. Modele de examen din anii trecuți se găsesc pe \href{https://github.com/palcu/fmi/blob/master/lfa.md}{palcu/fmi}.
+
+\subsubsection*{Teorie}
+Pe partea de teorie, întrebările sunt de forma:
+\begin{itemize}
+    \item Să demonstrezi o teoremă sau o propoziție din curs;
+
+          Exemple:
+          \begin{itemize}
+              \item Demonstrați lema de pompare pentru limbaje independente de context;
+              \item Demonstrați prima implicație a teoremei Myhill-Nerode;
+              \item Demonstrați trei proprietăți ale limbajelor regulate.
+          \end{itemize}
+
+    \item Să justifici dacă o anumită afirmație este sau nu adevărată;
+
+          Exemple:
+          \begin{itemize}
+              \item Limbajele regulate sunt închise la complementare;
+              \item Fie limbajele \(\lang_1, \lang_2\) cu \(\lang_1 \subset \lang_2\) și \(\lang_2 \in \reglang\). Atunci \(\lang_1 \in \reglang\).
+          \end{itemize}
+
+    \item Să justifici dacă o anumită problemă este sau nu decidabilă.
+
+          Exemple:
+          \begin{itemize}
+              \item Argumentați dacă este decidabilă egalitatea între două limbaje regulate;
+              \item Justificați dacă determinarea intersecției a două limbaje independente de context este decidabilă.
+          \end{itemize}
+\end{itemize}
+
+\subsubsection*{Exerciții}
+
+Exemple de exerciții pe care le puteți primii la examen:
+\begin{itemize}
+    \item Se dă un limbaj, dacă acesta este regulat/independent de context scrieți un automat sau o expresie regulată/o gramatică care să îl accepte.
+          Dacă nu, demonstrați că nu este regulat/nu este independent de context (folosind lema de pompare respectivă).
+
+    \item Se dau două \dfa/\nfa/\lnfa: să se minimizeze, să se verifice dacă acceptă același limbaj, sau să se calculeze intersecția/reuniunea lor.
+
+    \item Să se dea exemplu de o gramatică independentă de context care respectă anumite condiții: să aibă un anumit număr de terminali/neterminali, un anumit număr de producții, să genereze un limbaj finit, etc.
+
+    \item Se dă o gramatică independentă de context, să se aducă la o formă normală Chomsky, sau să se elimine producțiile unitate, etc.
+
+    \item Să se scrie un automat push-down determinist/nedeterminist care să accepte un limbaj prin stare vidă/prin stare finală/prin stare finală și stivă vidă.
+\end{itemize}
+
+\subsection*{Laborator}
+
+Îți alegi teme (exerciții) pe care le rezolvi individual și apoi le prezinți la laborator. În general, temele mai grele (care necesită mai mult efort) au note maxime mai mari (dar și penalitate mai mare dacă nu le faci).

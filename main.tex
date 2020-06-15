@@ -1,0 +1,77 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fontenc}
+
+% Suport pentru limba română
+\usepackage{polyglossia}
+\setdefaultlanguage{romanian}
+
+% Schimbă textul pentru demonstrație
+\addto\captionsromanian{\renewcommand*{\proofname}{Rezolvare}}
+
+% Notații matematice
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{unicode-math}
+
+\AtBeginDocument{
+  \renewcommand{\setminus}{\mathbin{\backslash}}%
+}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercițiul}[subsection]
+\renewcommand{\theexercise}{\arabic{exercise}}
+
+\theoremstyle{remark}
+\newtheorem*{observation}{Observație}
+
+% Pentru notația cu mulțimi
+\usepackage{braket}
+
+% Pentru a muta mai sus titlul
+\usepackage{titling}
+\setlength{\droptitle}{-5em}
+
+% Link-uri funcționale în text
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=cyan,
+}
+
+% Pentru a desena diagrame și grafuri
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+    ->, % makes the edges directed
+    >=stealth, % makes the arrow heads bold
+    node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+    every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+    initial text=$ $, % sets the text that appears on the start arrow
+}
+
+% Etichete customizabile
+\usepackage{caption}
+
+% Figuri care sunt fixate
+\usepackage{float}
+
+\title{Limbaje Formale și Automate\\Tutoriat}
+\author{Gabriel Majeri}
+\date{}
+
+\include{commands}
+
+\begin{document}
+
+\maketitle
+
+\input{./tutoriate/tutoriat0}
+\input{./tutoriate/tutoriat1}
+\input{./tutoriate/tutoriat2}
+\input{./tutoriate/tutoriat3}
+\input{./tutoriate/tutoriat4}
+\input{./tutoriate/tutoriat5}
+
+\end{document}

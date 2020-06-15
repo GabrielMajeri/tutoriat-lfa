@@ -1,0 +1,231 @@
+\section*{Teorie la examen}
+
+Prima jumătate a examenului se bazează pe teoria învățată la curs.
+
+La primele două probleme se cere demonstrația a unor teoreme/propoziții din curs.
+
+Urmează câte 4 afirmații a căror valoare de adevăr trebuie determinată, cu justificări (pe scurt și la obiect). Acestea nu apar explicit în curs, dar se bazează pe observațiile și informațiile din materiale.
+
+\subsection*{Decidabilitate}
+
+Ca să arăți că o anumită problemă este \emph{decidabilă}, trebuie să arăți că există un algoritm pentru asta. De exemplu, să verifici că un număr e prim este decidabil, pentru că îl poți descompune în factori și vezi să nu aibă alți factori în afară de el însuși.
+
+Ca să arăți că o anumită problemă \emph{nu este decidabilă}, trebuie să te bazezi pe afirmații din curs. De exemplu, se știe că nu există un algoritm pentru a găsi intersecția a două gramatici independente de context.
+
+\subsection*{Egalitatea de limbaje}
+
+Ca să verifici dacă două limbaje regulate \(\lang_1, \lang_2\) sunt egale, construiești automate finite care să accepte \(\lang_1\) respectiv \(\lang_2\), apoi aplici algoritmul din curs pentru a verifica că automatele sunt echivalente.
+
+Pentru limbaje independente de context, nu se poate verifica (nu este decidabilă) egalitatea.
+
+\subsection*{Exerciții de teorie}
+
+Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{justifice} dacă afirmația respectivă este \emph{adevărată} sau \emph{falsă}.
+
+\subsubsection*{Examen 2011}
+
+\begin{exercise}
+    Există limbaje regulate care nu sunt independente de context.
+\end{exercise}
+\begin{proof}
+    Afirmația este falsă, limbajele regulate sunt incluse strict în cele independente de context, conform \href{https://en.wikipedia.org/wiki/Chomsky_hierarchy}{ierarhiei Chomsky}.
+
+    Pentru orice limbaj regulat putem scrie o gramatică regulată corespunzătoare, care este inclusă în gramaticile independente de context, deci și limbajul este inclus în limbajele independente de context.
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că  \(\lang_1 \subseteq \lang_2\) și \(\lang_2 \in REG\). Atunci \(\lang_1 \in REG\).
+\end{exercise}
+\begin{proof}
+    Fals, un contraexemplu este să luăm \(\lang_1 = \set{ a^n b^n | n \in \naturals }\), \(\lang_2 = \set{ a, b }^*\).
+
+    Avem că \(\lang_1 \subseteq \lang_2\) dar știm că \(\lang_1\) nu este regulat.
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajele acceptate de doua automate finite deterministe sunt egale sau nu.
+\end{exercise}
+\begin{proof}
+    Dacă avem două automate finite deterministe, putem aplica algoritmul de minimizare din curs (cel bazat pe un tabel). În urma acestui algoritm putem determina dacă automatele sunt echivalente.
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajul intersecției a două gramatici independente de context este vid sau nu.
+\end{exercise}
+\begin{proof}
+    Nu există un algoritm pentru determinarea intersecției a două gramatici independente de context. De aceea, nu se poate verifica dacă aceasta este vidă sau nu.
+\end{proof}
+
+\subsubsection*{Examen 2013}
+
+\begin{exercise}
+    Există o gramatică regulată \(G\) astfel încât nu există niciun automat finit nedeterminist (\nfa) care să accepte exact \(\lang(G)\).
+\end{exercise}
+\begin{proof}
+    Afirmația este falsă. Prin definiție, gramaticile \emph{regulate} definesc un limbaj regulat. Pentru orice limbaj regulat se poate scrie un \nfa{}.
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajele acceptate de două automate finite nedeterministe cu lambda mișcări sunt egale sau nu.
+\end{exercise}
+\begin{proof}
+    Orice \lnfa{} poate fi redus la un \dfa{}, deci această întrebare este echivalentă cu exercițiul 3.
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că \(\lang_2 \subseteq \lang_1\) și \(\lang_2 \in CF\). Atunci \(\lang_1 \in CF\).
+\end{exercise}
+\begin{proof}
+    Putem avea \(\lang_2 = \set{ a^n b^n | n \in \naturals }\) care știm că este independent de context, și \(\lang_1 = \lang_2 \cup \set{ c^p | p \text{ prim} }\).
+
+    Avem că \(\lang_2 \subseteq \lang_1\) dar \(\lang_1 \not\in CF\).
+\end{proof}
+
+\begin{exercise}
+    Există limbaje finite care nu sunt regulate.
+\end{exercise}
+\begin{proof}
+    Dacă avem un limbaj finit format din cuvintele \(\set{ w_1, \dots, w_n }\), putem să scriem o expresie regulată \(w_1 + \dots + w_n\) care să îl accepte.
+\end{proof}
+
+\subsubsection*{Examen 2014}
+
+\begin{exercise}
+    Există o gramatică regulată \(G\) astfel încât nu există nicio expresie regulată \(E\) cu proprietatea că \(\lang(E) = \lang(G)\).
+\end{exercise}
+\begin{proof}
+    La fel ca la exercițiul 5, gramaticile regulate și expresiile regulate definesc aceeași familie de limbaje, limbajele regulate.
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că \(\lang_1 \subseteq \lang_2\) și \(\lang_1 \in REG\). Deci \(\lang_2 \in REG\).
+\end{exercise}
+\begin{proof}
+    Fals, putem da un contraexemplu ca la exercițiul 7, cu \(\lang_1 = \set{ a^n | n  }\) și \(\lang_2 = \lang_1 \cup \set{ b^p | p \text{ prim}}\).
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajele acceptate de două expresii regulate sunt egale.
+\end{exercise}
+\begin{proof}
+    Expresiile regulate pot fi transformate în automate finite. Putem verifica echivalența automatelor finite ca la exercițiul 3.
+\end{proof}
+
+\begin{exercise}
+    Există limbaje modelate de automate push-down deterministe care au toate cuvintele de lungime impară și nu pot fi modelate de gramatici independente de context.
+\end{exercise}
+\begin{proof}
+    Nu există, limbajele acceptate de \emph{orice fel} de automat push-down sunt incluse în limbajele modelate de gramaticile independente de context.
+\end{proof}
+
+\subsubsection*{Examen 2016}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cup \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+\end{exercise}
+\begin{proof}
+    Fals, putem avea \(\lang_2 = \lang_3 = \set{ a, b }^*\), și \(\lang_1 = \set{ a^n b^n | n \in \naturals}\), care nu este regulat.
+\end{proof}
+
+\begin{exercise}
+    Există o gramatică regulată \(G\) peste alfabetul \(\set{ a, b, c }\) astfel încât nu există niciun \nfa{} \(A\) cu proprietatea că
+    \[\lang(A) = \lang(G) \cup \set{ acccab, bbaabb }\]
+\end{exercise}
+\begin{proof}
+    Limbajul modelat de \(G\) este unul regulat, deoarece gramatica este regulată. De asemenea \(\set{ acccab, bbaabb }\) este o mulțime finită de cuvinte, deci este un limbaj finit, deci limbaj regulat.
+
+    Reuniunea a două limbaje regulate este tot un limbaj regulat. Deci termenul din dreapta este sigur acceptabil de un \nfa{}.
+\end{proof}
+
+\begin{exercise}
+    Există limbaje modelate de gramatici independente de context care au toate cuvintele de lungime impară și nu pot fi modelate de automate push-down deterministe?
+\end{exercise}
+\begin{proof}
+    Un exemplu de limbaj care nu poate fi acceptat de automate push-down \emph{deterministe} este \(\set{ w w^R | w \in \set{a, b}^* }\), unde \(R\) înseamnă oglinditul cuvântului.
+
+    Toate cuvintele din acest limbaj au lungime \(\abs{w} + \abs{w^R} = 2 \abs{w}\), care este un număr par. Trebuie să mai adăugăm o literă ca lungimea să fie impară.
+
+    Dacă adăugăm o literă distinctivă în mijloc (de exemplu un \(c\)), limbajul ar putea fi acceptat și de automate push-down deterministe. Soluția este să adăugăm litera la început sau la final:
+    \[\lang = \set{ w w^R c | w \in \set{a, b}^* }\]
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajele acceptate de un \nfa{} cu lambda mișcări și o gramatică regulată cu cel mult 20 de producții sunt egale.
+\end{exercise}
+\begin{proof}
+    Orice gramatică regulată produce un limbaj regulat, și putem verifica echivalența de limbaje regulate ca la exercițiul 3.
+\end{proof}
+
+\subsubsection*{Examen 2017}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cup \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+\end{exercise}
+\begin{proof}
+    Identic cu exercițiul 13.
+\end{proof}
+
+\begin{exercise}
+    Există o gramatică neambiguă \(G\) peste alfabetul \(\set{ a, b, c }\) astfel încât nu există niciun \nfa{} \(A\) cu proprietatea că
+    \[\lang(A) = \lang(G) \cup \set{ acccab, bbaabb }\]
+\end{exercise}
+\begin{proof}
+    O gramatică \emph{neambiguă} este independentă de context, nu neapărat regulată. Putem să luăm contraexemplu gramatica
+    \begin{align*}
+        S & \rightarrow aSb     \\
+        S & \rightarrow \lambda
+    \end{align*}
+    care este neambiguă și generează \(\set{ a^n b^n | n \in \naturals }\). Aceasta nu poate fi acceptată de un automat finit.
+\end{proof}
+
+\begin{exercise}
+    Există limbaje modelate de gramatici independente de context care au toate cuvintele de lungime impară și nu pot fi modelate de automate push-down cu acceptare prin stare finală și stivă vidă.
+\end{exercise}
+\begin{proof}
+    Fals, orice gramatică independentă de context poate fi modelată de un automat push-down. Dacă folosim automate push-down nedeterministe atunci modul de acceptare nu contează.
+\end{proof}
+
+\begin{exercise}
+    Este decidabil dacă limbajele decidabile de o expresie regulată cu cel puțin 20 de operator și o gramatică regulată cu cel puțin 20 de producții sunt egale.
+\end{exercise}
+\begin{proof}
+    Limbajele produse de expresiile regulate și de gramaticile regulate sunt limbaje regulate, deci putem să le verificăm echivalența ca la exercițiul 3.
+\end{proof}
+
+\subsubsection*{Examen 2018}
+
+\begin{exercise}
+    Este decidabil dacă limbajele acceptate de un \nfa{} cu lambda mișcări și un automat push-down aciclic sunt egale.
+\end{exercise}
+\begin{proof}
+    Dacă automatul push-down este aciclic, atunci el nu poate produce o infinitate de cuvinte; dacă facem o mulțime cu toate cuvintele pe care le produce, aceasta va fi finită.
+
+    Combinând asta cu concluzia de la exercițiul 8, care ne spune că orice limbaj (mulțime de cuvinte) finit este regulat, avem că limbajul acceptat de acest automat push-down este \emph{regulat}. Deci putem construi un automat finit care să îl accepte, și apoi să verificăm echivalența între acesta și un \nfa{}.
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cap \lang_2 = \lang_3\) și \(\lang_1, \lang_2 \in CFL\). Deci \(\lang_3 \in CFL\).
+\end{exercise}
+\begin{proof}
+    Fals, limbajele independente de context nu sunt închise la intersecție. Contraexemplul clasic este \(\lang_1 = \set{ a^n b^n c^i | n \in \naturals, i \in \naturals }\), \(\lang_2 = \set{ a^j b^m c^m | j \in \naturals, m \in \naturals }\).
+
+    \(\lang_3\) nu este independent de context:
+    \[\lang_1 \cap \lang_2 = \set{ a^n b^n c^n | n \in \naturals } = \lang_3\]
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cap \overline{\lang_2} = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+\end{exercise}
+\begin{proof}
+    Fals, un contraexemplu este \(\lang_1 = \set{ a^n b^n | n \in \naturals }\), \(\lang_2 = \set{a, b}^*\), \(\lang_3 = \varnothing\).
+
+    Avem că
+    \[\lang_1 \cap \overline{\lang_2} = \lang_1 \cap \overline{\set{ a, b }^* } = \lang_1 \cap \varnothing = \varnothing = \lang_3\]
+\end{proof}
+
+\begin{exercise}
+    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \setminus \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+\end{exercise}
+\begin{proof}
+    Deoarece \(A \setminus B = A \cap \overline{B}\), această problemă este echivalentă cu exercițiul 23.
+\end{proof}

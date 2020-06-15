@@ -1,0 +1,394 @@
+\section*{Lema de pompare}
+
+Să se demonstreze că limbajul
+\[\lang = \Set{ a^n b^n c^2 | n \in \naturals^* }\]
+nu este regulat.
+
+Pentru a demonstra că acesta nu este un limbaj regulat, trebuie să demonstrăm că nu există niciun \dfa/\nfa/\lnfa{} care să îl accepte.
+
+Când vrei să demonstrezi că ceva nu este posibil în matematică, de obicei folosești \emph{reducerea la absurd}. Presupui că o propoziție este adevărată, și ajungi la o contradicție.
+
+O demonstrație că un limbaj nu este regulat/nu este independent de context decurge în felul următor:
+\begin{enumerate}
+    \item Presupun că limbajul este regulat/independent de context.
+
+    \item \textbf{Dacă mă ajută,} pot să aplic orice operații la care este închis (deoarece am presupus că limbajul inițial este regulat/independent de context, în urma acestor operații obțin tot un limbaj regulat/independent de context):
+          \begin{itemize}
+              \item pentru limbaje regulate: cam toate operațiile
+              \item pentru limbaje independente de context: intersecție cu limbaje regulate, morfisme și morfisme inverse
+          \end{itemize}
+
+    \item Pe rezultat aplic lema de pompare.
+          Caut un contra-exemplu de cuvânt și \(i\) pentru care lema este falsă, și astfel am o contradicție
+
+    \item În concluzie, limbajul nu este regulat/independent de context.
+\end{enumerate}
+
+\begin{observation}
+    Lemele de pompare pot fi folosite doar pentru a demonstra că un limbaj \textbf{nu} este regulat/independent de context. Pentru a demonstra afirmativa trebuie să construim automatul/gramatica corespunzătoare.
+\end{observation}
+
+\subsection*{Pentru limbaje regulate}
+
+Fie \(\lang\) un limbaj regulat. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \lang\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x y z\) cu proprietățile:
+\begin{itemize}
+    \item \(\abs{y} \geq 1\)
+    \item \(\abs{xy} \leq n_0\)
+    \item \(\forall i \in \naturals\), \(x y^i z \in \lang\)
+\end{itemize}
+
+\subsection*{Pentru limbaje independente de context}
+
+Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \lang\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x u y v z\) cu proprietățile:
+\begin{itemize}
+    \item \(\abs{u v} \geq 1\)
+    \item \(\abs{u y v} \leq n_0\)
+    \item \(\forall i \in \naturals\), \(x u^i y v^i z \in \lang\)
+\end{itemize}
+
+\subsection*{Exerciții}
+
+\begin{exercise}[exercițiul 8 din examen iunie 2011]
+    Demonstrați folosind lema de pompare că limbajul
+    \[\lang = \set{ a^{2k} b^l a^{k} | k \geq 0, l \geq 1 }\]
+    nu este regulat.
+\end{exercise}
+\begin{proof}
+    Partea din limbaj care „ne deranjează” este cea cu \(k\), unde avem o corelare a numărului de \(a\)-uri de la început cu numărul de \(a\)-uri de la sfârșit.
+
+    Ca să simplificăm problema, vom intersecta limbajul cu un limbaj regulat.
+
+    Presupunem că \(\lang\) este regulat. Atunci limbajul
+    \[\lang' = \lang \cap a^* b a^* = \set{ a^{2k} b a^k | k \geq 0 }\]
+    este la rândul lui regulat (am folosit o expresie regulată ca să descriu limbajul cu care intersectez).
+
+    Fie \(n_0 \in \naturals^*\) constanta din lema de pompare pentru limbaje regulate.
+
+    Să luăm cuvântul
+    \[w = a^{2 n_0} \, b \, a^{n_0}\]
+    Acesta are lungimea \(\abs{w} = 2 n_0 + 1 + n_0 = 3n_0 + 1 \geq n_0\), deci putem aplica lema pe el.
+
+    Trebuie să ne gândim cum ar arăta o descompunere a cuvântului care să respecte proprietățile din lemă:
+    \begin{align*}
+        w        & = x \, y \, z \\
+        \abs{y}  & \geq 1        \\
+        \abs{xy} & \leq n_0
+    \end{align*}
+
+    Datorită modului în care am ales cuvântul, o descompunere care convine o să fie de forma
+    \[
+        w = \underbrace{aa \dots aa}_{x}
+        \underbrace{aa \dots aa}_{y}
+        \underbrace{aa \dots aa b aa \dots aa}_{z}
+    \]
+    Scris pe scurt:
+    \begin{gather*}
+        x = a^p \\
+        y = a^q \\
+        z = a^{2 n_0 - q - p} \, b \, a^{n_0}
+    \end{gather*}
+    unde
+    \begin{align*}
+        q     & \geq 1   \\
+        p + q & \leq n_0
+    \end{align*}
+
+    Din lemă avem că
+    \[\forall i \in \naturals, x y^i z \in \lang'\]
+    Pentru \(i = 0\) obținem
+    \begin{align*}
+        x y^0 z & = a^p \, a^{2 n_0 - q - p} \, b \, a^{n_0} = \\
+                & = a^{2 n_0 - q} \, b \, a^{n_0}
+    \end{align*}
+    Dacă aparține limbajului, ar rezulta că
+    \[2 n_0 - q = 2 n_0\]
+    Dar știm deja că \(q \geq 1\), deci contradicție.
+
+    Presupunerea că \(\lang\) este regulat este falsă.
+\end{proof}
+
+\begin{exercise}[exercițiul 8 din examen iunie 2014]
+    Demonstrați că limbajul
+    \[\lang = \set{ a^k b^{3l} a^l | k \geq 1, l \geq 0 }\]
+    nu este regulat.
+\end{exercise}
+\begin{proof}
+    Presupunem că \(\lang\) este regulat.
+
+    Putem intersecta limbajul cu \(a b^* a^*\), și obținem
+    \[\lang' = \Set{ a b^{3l} a^l | l \geq 0 }\]
+
+    Fie \(n_0 \in \naturals\) din lema de pompare pentru limbaje regulate.
+
+    Putem lua cuvântul
+    \[w = a \, b^{3 n_0} \, a^{n_0}\]
+    care are lungimea \(\abs{w} = 1 + 3 n_0 + n_0 = 4 n_0 + 1 \geq n_0\).
+
+    Trebuie să luăm în considerare toate descompunerile posibile pentru acest cuvânt.
+
+    Să ne gândim cum arată cuvântul \(w\):
+
+    \[w = \underbrace{a}_{\text{un \(a\)}} \underbrace{bbbbbbb\dots{}bbbb}_{3n_0 \text{ de \(b\)-uri}} \, \underbrace{aaa\dots{}aaa}_{n_0 \text{ de \(a\)-uri}}\]
+
+    Știm că \(xy\) trebuie să se afle la începutul cuvântului, și din lema de pompare avem \(\abs{xy} \leq n_0\).
+
+    \begin{enumerate}
+        \item Cazul în care \(x\) îl conține pe \(a\):
+              \[w = \underbrace{a bb\dots{}bbb}_{x} \underbrace{b\dots{}bb}_{y} \underbrace{bbb\dots{}bbb aa\dots{}aa}_{z}\]
+              \begin{gather*}
+                  x = a \, b^p \\
+                  y = b^q \\
+                  z = b^{3 n_0 - q - p} a^{n_0}
+              \end{gather*}
+              unde
+              \begin{align*}
+                  \abs{y}   & \geq 1 \implies q \geq 1 \\
+                  \abs{x y} & \leq n_0
+              \end{align*}
+
+              Din lema de pompare avem că
+              \[\forall i \in \naturals, x \, y^i \, z \in \lang'\]
+
+              Luăm \(i = 0\). Obținem cuvântul
+              \begin{align*}
+                  x y^0 z & = a \, b^p \, b^{3 n_0 - q - p} \, a^{n_0} \\
+                          & = a \, b^{3 n_0 - q} \, a^{n_0}
+              \end{align*}
+              care nu aparține limbajului deoarece \(3 n_0 - q < 3 n_0\).
+
+              Contradicție cu lema de pompare, deci \(\lang'\) nu este regulat.
+
+        \item Cazul în care \(x\) nu-l conține pe \(a\) (este \(\lambda\)):
+              \[w = \underbrace{}_{x} \underbrace{a bb\dots{}bbb}_{y} \underbrace{bbb\dots{}bbb aa\dots{}aa}_{z}\]
+              \begin{gather*}
+                  x = \lambda \\
+                  y = a \, b^p \\
+                  z = b^{3 n_0 - p} \, a^{n_0}
+              \end{gather*}
+              unde
+              \[1 \leq \abs{y} \leq n_0\]
+
+              După un raționament analog ajungem la aceeași concluzie. În momentul în care ridicăm \(y\) la o putere \(i \geq 2\), o să avem mai mult de un \(a\) la început.
+    \end{enumerate}
+
+\end{proof}
+
+\begin{exercise}[exercițiul 9 din examen iunie 2016]
+    Demonstrați că limbajul
+    \[\lang = \set{ w a^k w | w \in \set{a, b, c}^*, k \geq 0 }\]
+    nu este regulat.
+\end{exercise}
+\begin{proof}
+    Presupunem că \(\lang\) ar fi regulat.
+
+    Fie \(n_0 \in \naturals\) din lema de pompare.
+
+    Putem alege \(w = b^{n_0} \, a \, b^{n_0}\), cu \(\abs{w} = n_0 + 1 + n_0 = 2 n_0 + 1 \geq n_0\).
+
+    Avem
+    \begin{gather*}
+        x = b^{p} \\
+        y = b^{q} \\
+        z = b^{n_0 - q - p} \, a \, b^{n_0}
+    \end{gather*}
+    cu
+    \begin{align*}
+        \abs{y}   & \geq 1   \\
+        \abs{x y} & \leq n_0
+    \end{align*}
+
+    Aplicăm lema de pompare pentru \(i = 0\) și obținem
+    \begin{align*}
+        x y^0 z & = b^p \, b^{n_0 - q - p} \, a \, b^{n_0} \\
+                & = b^{n_0 - q} \, a \, b^{n_0}
+    \end{align*}
+    Deoarece \(n_0 - q \neq n_0\), cuvântul nu aparține limbajului.
+
+    Prin urmare, presupunerea noastră este falsă, limbajul nu este regulat.
+\end{proof}
+
+\begin{exercise}[exercițiul 10 din examen iunie 2017]
+    Demonstrați că limbajul
+    \[\lang = \set{ a^n b^m | n \text{ pătrat perfect}, m \geq 5 }\]
+    nu este independent de context.
+\end{exercise}
+\begin{proof}
+    Presupunem că \(\lang\) este independent de context.
+
+    Îl intersectăm cu \(a^* b^5\) și obținem
+    \[\lang' = \set{ a^n b^5 | n \text{ pătrat perfect } }\]
+
+    Fie \(n_0 \in \naturals\) din lema de pompare.
+
+    Alegem cuvântul
+    \[w = a^{(n_0)^2} b^5\]
+    care este din limbaj și are \(\abs{w} = (n_0)^2 + 5 \geq n_0\)
+
+    Dacă luăm o descompunere în care \(u y v\) se află în zona de \(b\)-uri, atunci când o să aplicăm lema de pompare pentru \(i \neq 1\) nu mai avem \(b^5\).
+
+    Dacă luăm o descompunere în care \(u y v\) conține și \(a\)-uri, de exemplu:
+    \begin{gather*}
+        x = a^p \\
+        u = a^q \\
+        y = a^r \\
+        v = a^s \\
+        z = a^{(n_0)^2 - s - r - q - p} \, b^5
+    \end{gather*}
+    unde
+    \begin{align*}
+        \abs{uv} \geq 1      & \iff q + s \geq 1       \\
+        \abs{u y v} \leq n_0 & \iff q + r + s \leq n_0
+    \end{align*}
+
+    Aplicăm lema de pompare pentru un \(i\) oarecare și vedem ce obținem:
+    \begin{align*}
+        x u^i y v^i z & = a^p \, a^{iq} \, a^r \, a^{is} \, a^{(n_0)^2 - s - r - q - p} \, b^5 \\
+                      & = a^{(n_0)^2 + q (i - 1) + s (i - 1)} \, b^5                           \\
+                      & = a^{(n_0)^2 + (q + s) (i - 1)} \, b^5
+    \end{align*}
+
+    Între două pătrate perfecte nu poate exista un alt pătrat perfect. După \((n_0)^2\), următorul pătrat perfect este \((n_0 + 1)^2\), adică \((n_0)^2 + 2 n_0 + 1\).
+
+    Dacă luăm \(i = 2\), obținem
+    \[a^{(n_0)^2 + (q + s)} \, b^5\]
+
+    Cu siguranță \(q + s \leq 2 n_0 + 1\), deci nu avem un pătrat perfect. Cuvântul nu aparține limbajului.
+
+    În concluzie, \(\lang\) nu este independent de context.
+\end{proof}
+
+\begin{exercise}[exercițiul bonus din examen iunie 2013]
+    Demonstrați că limbajul
+    \[\lang = \set{ 0^n 1^m | n > 0, m \text{ prim} }\]
+    nu este independent de context.
+\end{exercise}
+\begin{proof}
+    Presupunem că \(\lang\) este independent de context.
+
+    Îl putem intersecta cu \(0 1^*\) și obținem
+    \[\lang = \set{ 0 1^m | m \text{ prim } }\]
+
+    Fie \(n_0 \in \naturals\) din lema de pompare.
+
+    Notăm cu \(P\) = următorul număr prim mai mare decât \(n_0\).
+    Cuvântul \(w = 0 1^P\) aparține limbajului și are lungime \(\abs{w} = 1 + P \geq n_0\).
+
+    Avem mai multe cazuri, în funcție de cum este descompunerea:
+    \begin{enumerate}
+        \item
+              \begin{gather*}
+                  x = 0 \, 1^p \\
+                  u = 1^q \\
+                  y = 1^r \\
+                  v = 1^s \\
+                  z = 1^{P - s - r - q - p}
+              \end{gather*}
+              unde
+              \begin{align*}
+                  \abs{u v} \geq 1     & \iff q + s \geq 1       \\
+                  \abs{u y v} \leq n_0 & \iff q + r + s \leq n_0
+              \end{align*}
+
+              Aplicăm lema de pompare pentru un \(i \in \naturals\) oarecare:
+              \begin{align*}
+                  x u^i y v^i z & = 0 \, 1^p \, 1^{iq} \, 1^r \, 1^{is} \, 1^{P - s - r - q - p} \\
+                                & = 0 \, 1^{P + q(i - 1) + s(i - 1)}                             \\
+                                & = 0 \, 1^{P + (q + s)(i - 1)}
+              \end{align*}
+
+              Pentru \(i = P + 1\), obținem cuvântul
+              \[0 \, 1^{P + (q + s) P} = 0 \, 1^{(q + s)(P + 1)}\]
+              care nu aparține limbajului, deoarece exponentul lui \(1\) este număr compus. Contradicție cu lema de pompare.
+
+        \item
+              \begin{gather*}
+                  x = \lambda \\
+                  u = 0 \, 1^p \\
+                  y = 1^q \\
+                  v = 1^r \\
+                  z = 1^{P - r - q - p}
+              \end{gather*}
+
+              Aplicând lema de pompare obținem un rezultat analog cu primul caz.
+
+        \item
+              \begin{gather*}
+                  x = u = \lambda \\
+                  y = 0 \, 1^p \\
+                  v = 1^q \\
+                  z = 1^{P - q - p}
+              \end{gather*}
+
+              Asemănător cu cazurile de mai sus.
+
+        \item
+              \begin{gather*}
+                  x = u = y = \lambda \\
+                  v = 0 \, 1^p \\
+                  z = 1^{P - p}
+              \end{gather*}
+
+              Asemănător cu cazurile de mai sus.
+    \end{enumerate}
+
+    În concluzie, \(\lang\) nu este independent de context.
+\end{proof}
+
+\begin{exercise}[exercițiul 11 din examen iunie 2011]
+    Demonstrați că limbajul
+    \[\lang = \set{ a^i b^j c^k | i < j \text{ și } i + 2j + 3 < k }\]
+    nu este independent de context.
+\end{exercise}
+\begin{proof}
+    Presupunem că \(lang\) este independent de context.
+
+    Fie \(n_0\) din lema de pompare.
+
+    Vrem să alegem un cuvânt în care inegălitățile să fie satisfăcute cât mai la limită.
+    Alegem \(i = n_0\), din \(i < j\) putem alege \(j = n_0 + 1\).
+    Din \(i + 2j + 3 < k\), alegem \(k = 3 n_0 + 6\).
+
+    Cuvântul ales este \(w = a^{n_0} \, b^{n_0 + 1} \, c^{3 n_0 + 6}\), unde \(\abs{w} = 5 n_0 + 7 \geq n_0\).
+
+    Obținem foarte multe descompuneri posibile:
+
+    Dacă
+    \begin{gather*}
+        x = a^p \\
+        u = a^q \\
+        y = a^r \\
+        v = a^s \\
+        z = a^{n_0 - s - r - q - p} \, b^{n_0 + 1} \, c^{3 n_0 + 6}
+    \end{gather*}
+    putem pompa cu \(i > 1\) și vom obține un număr de \(a\)-uri care depășește numărul de \(b\)-uri, ieșind din limbaj.
+
+    Dacă
+    \begin{gather*}
+        x = a^{n_0} b^p \\
+        u = b^q \\
+        y = b^r \\
+        v = b^s \\
+        z = b^{n_0 + 1 - s - r - q - p} c^{3 n_0 + 6}
+    \end{gather*}
+    putem pompa cu \(i > 1\) și vom depăși a doua condiție.
+
+    etc.
+\end{proof}
+
+\begin{exercise}[exercițiul 10 din examen iunie 2016]
+    Demonstrați că limbajul
+    \[\lang = \set{ a^n b^m c^r | n \geq m \geq r \geq 150 }\]
+    nu este independent de context.
+\end{exercise}
+\begin{proof}
+    Limbajul se poate rescrie ca
+    \[\lang = \set{ a^n b^m c^r | n \geq m, m \geq r, r \geq 150 }\]
+
+    Alegem un cuvânt cum ar fi \(w = a^{n_0} b^{n_0} c^{n_0}\) și aplicăm lema de pompare.
+
+    \begin{itemize}
+        \item În cazurile în care pompăm doar \(a\)-uri putem lua \(i = 0\) și o să avem mai puține \(a\)-uri decât \(b\)-uri.
+        \item Când pompăm și \(a\)-uri și \(b\)-uri sau doar \(b\)-uri putem lua \(i = 0\) și avem mai puține \(b\)-uri decât \(c\)-uri.
+        \item Când pompăm \(c\)-uri putem lua un \(i > 1\) și o să avem mai multe \(c\)-uri decât \(b\)-uri.
+    \end{itemize}
+\end{proof}

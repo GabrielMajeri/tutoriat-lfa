@@ -1,0 +1,184 @@
+\section*{Automate Pushdown}
+
+Un \emph{automat pushdown} este un automat finit extins cu o stivă de dimensiune infinită. Acesta operează la fel ca un automat obișnuit, prelucrând cuvintele literă cu literă, dar poate să stocheze și să ia decizii pe baza memoriei sale.
+
+Limbajele acceptate de \pda{} sunt aceleași cu limbajele generate de \textbf{gramatici independente de context}.
+
+Automatele pushdown deterministe sunt incluse \textbf{strict} în cele nedeterministe.
+De exemplu, se poate demonstra că limbajul
+\[\lang = \set{ w w^R | w \in \set{a, b}^* }\]
+nu poate fi acceptat de un \dpda{}, dar este destul de simplu să facem un \npda{} pentru el.
+
+Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în care \pda{}-ul începe execuția, presupunem că acest simbol se află pe stivă, și îl vom lăsa tot timpul la baza stivei.
+
+\subsection*{Exerciții}
+
+\begin{exercise}[exercițiul 10 din examen iunie 2011]
+    Construiți un automat pushdown (\pda{}), eventual determinist, pentru limbajul
+    \[
+        \lang = \set{ w | w \in \set{a, b, c}^*, \abs{w}_a = \abs{w}_b + 2 }
+    \]
+\end{exercise}
+
+\textit{Idee}: Pe stivă reținem dacă am citit mai multe \(a\)-uri sau mai multe \(b\)-uri până la acel moment. La finalul cuvântului, trebuie să avem două \(a\)-uri în plus.
+
+\begin{proof}~
+    \begin{figure}[H]
+        \centering
+        \caption*{Construim următorul \pda{}, cu acceptare prin stare finală și stivă vidă:}
+        \begin{tikzpicture}
+            \node[state, initial] (1) {\(q_1\)};
+            \node[state, right of=1] (2) {\(q_2\)};
+            \node[state, right of=2] (3) {\(q_3\)};
+            \node[state, accepting, right of=3] (4) {\(q_4\)};
+
+            \draw (1) edge[above] node[align=center] {
+                    \(\lambda, Z_0/Z_0\) \\
+                    \(\lambda, A/A\) \\
+                    \(\lambda, B/B\)
+                } (2)
+            (1) edge[loop above] node[align=center] {
+                    \(a, Z_0/AZ_0\) \\
+                    \(a, A/AA\) \\
+                    \(a, B/\lambda\) \\
+                    \(b, Z_0/BZ_0\) \\
+                    \(b, B/BB\) \\
+                    \(b, A/\lambda\)
+                } (1)
+            (2) edge[above] node {\(\lambda, A/\lambda\)} (3)
+            (3) edge[above] node {\(\lambda, A/\lambda\)} (4);
+        \end{tikzpicture}
+    \end{figure}
+
+    În starea \(q_1\), automatul ciclează, citește caractere și le pune pe stivă. La un moment dat, acesta trece nedeterminist în \(q_2\). Tranzițiile de la \(q_2\) la \(q_3\) și de la \(q_3\) la \(q_4\) verifică că avem două \(a\)-uri în plus pe stivă.
+\end{proof}
+
+\begin{exercise}[exercițiul 11 din examen iunie 2013]
+    Construiți un automat pushdown (\pda{}), eventual determinist, pentru limbajul
+    \[
+        \lang = \set{ w | w \in \set{0, 1, 2}^*, 4\abs{w}_0 + 1 = \abs{w}_2 }
+    \]
+\end{exercise}
+
+\textit{Idee}: La fel ca mai sus, dar punem de 4 ori mai multe simboluri pentru \(0\) decât pentru \(2\). La final trebuie să rămână un \(2\) în plus.
+
+\begin{exercise}[exercițiul 10 din examen iunie 2014]
+    Construiți un automat pushdown (\pda{}) pentru limbajul
+    \[
+        \lang = \set{ a^n b^n | n \geq 0 } \cup \set{ a^n b^{3n} | n \geq 0 }
+    \]
+\end{exercise}
+
+\textit{Idee}: Reținem câte \(a\)-uri citim pe stivă. Când dăm de primul \(b\), automatul se bifurcă nedeterminist: pe un caz o să corelăm un \(b\) cu un \(a\), pe altul câte 3 \(b\)-uri cu un \(a\).
+
+\begin{proof}~
+    \begin{figure}[H]
+        \centering
+        \caption*{Construim următorul \pda{}, cu acceptare prin stare finală și stivă vidă:}
+        \begin{tikzpicture}
+            \node[state, initial] (1) {\(q_1\)};
+
+            \node[state, above right of=1] (2) {\(q_2\)};
+            \node[state, accepting, right of=2] (3) {\(q_3\)};
+
+            \node[state, below right of=1] (4) {\(q_4\)};
+            \node[state, right of=4] (5) {\(q_5\)};
+            \node[state, right of=5] (6) {\(q_6\)};;
+
+            \draw (1) edge[loop above] node[align=center] {
+                    \(a, Z_0/AZ_0\) \\
+                    \(a, A/AA\)
+                } (1)
+            (1) edge[below right] node {\(b, A/\lambda\)} (2)
+            (1) edge[above right] node {\(b, A/\lambda\)} (4)
+
+            (2) edge[loop above] node[align=center] {
+                    \(b, A/\lambda\)
+                } (3)
+            (2) edge[above] node {\(\lambda, Z_0/Z_0\)} (3)
+
+            (4) edge[above] node[align=center] {
+                    \(b, Z_0/Z_0\) \\
+                    \(b, A/A\)
+                } (5)
+            (5) edge[above] node[align=center] {
+                    \(b, Z_0/Z_0\) \\
+                    \(b, A/A\)
+                } (6)
+            (6) edge[below, bend left] node {\(b, A/\lambda\)} (4)
+            (6) edge[right, bend right] node {\(\lambda, Z_0/Z_0\)} (3);
+        \end{tikzpicture}
+    \end{figure}
+
+    În starea \(q_1\), automatul citește \(a\)-uri și le pune pe stivă. La primul \(b\) citit, trece nedeterminist în starea \(q_2\) sau \(q_4\).
+
+    În starea \(q_2\) citește \(b\)-uri și le corelează cu \(a\)-uri.
+
+    În stările \(q_4\), \(q_5\) și \(q_6\) avem un ciclu de lungime 3 care corelează câte 3 \(b\)-uri cu un \(a\).
+\end{proof}
+
+\begin{exercise}[exercițiul 11 din examen iunie 2017]
+    Construiți un automat pushdown (\pda{}) cu acceptare prin stivă vidă pentru limbajul
+    \[
+        \lang = \set{ w | w \in \set{a, b}^*, 2 \abs{w}_a \neq 3 \abs{w}_b + 2 } \cup \set{ aaab, bbba }
+    \]
+\end{exercise}
+
+\textit{Idee}: Rezolvăm ca mai sus, reținând câte \(a\)-uri / \(b\)-uri am citit pe stivă. La final verificăm să nu se îndeplinească egalitatea.
+
+\begin{exercise}[exercițiul 11 din examen iunie 2018]
+    Construiți un automat pushdown (\pda{}) pentru limbajul
+    \[
+        \lang = \set{ w w^R c^i | w \in \set{a, b}^*, i \geq 2 } \cup \set{ abca, ccba, cabc }
+    \]
+    unde \(w^R\) înseamnă oglinditul lui \(w\), de exemplu \((abcd)^R = dcba\).
+\end{exercise}
+
+\textit{Idee}: Reținem pe stivă literele lui \(w\), și alegem nedeterminist care este momentul în care începe \(w^R\).
+
+\begin{proof}~
+    \begin{figure}[H]
+        \centering
+        \caption*{Construim următorul \pda{} nedeterminist:}
+        \begin{tikzpicture}
+            \node[state, initial] (0) {\(q_0\)};
+            \node[state, below right of=0] (dfa) {\(q'\)};
+            \coordinate[right of=dfa] (dfa_body);
+
+            \node[state, above right of=0] (1) {\(q_1\)};
+            \node[state, right of=1] (2) {\(q_2\)};
+            \node[state, right of=2] (3) {\(q_3\)};
+            \node[state, accepting, right of=3] (4) {\(q_4\)};
+
+            \draw (0) edge[below left] node {\(\lambda, Z_0/Z_0\)} (dfa)
+            (dfa) edge[dotted] (dfa_body)
+            (0) edge[above left] node {\(\lambda, Z_0/Z_0\)} (1)
+            (1) edge[loop above] node[align=center] {
+                    \(a, Z_0/AZ_0\) \\
+                    \(a, A/AA\) \\
+                    \(a, B/AB\) \\
+                    \(b, Z_0/BZ_0\) \\
+                    \(b, A/BA\) \\
+                    \(b, B/BB\)
+                } (1)
+            (1) edge[above] node[align=center] {
+                    \(\lambda, Z_0/Z_0\) \\
+                    \(\lambda, A/A\) \\
+                    \(\lambda, B/B\)
+                } (2)
+            (2) edge[loop above] node[align=center] {
+                    \(a, A/\lambda\) \\
+                    \(b, B/\lambda\)
+                } (2)
+            (2) edge[above] node {\(c, Z_0/Z_0\)} (3)
+            (3) edge[above] node {\(c, Z_0/Z_0\)} (4)
+            (4) edge[loop above] node {\(c, Z_0/Z_0\)} (4);
+        \end{tikzpicture}
+    \end{figure}
+
+    În \(q_1\) punem pe stivă câte un simbol pentru fiecare literă citită. Alegem nedeterminist care este mijlocul cuvântului, trecând în starea \(q_2\). Aici citim literele și comparăm cu ce avem pe stivă.
+
+    În starea \(q_4\) acceptăm oricâte \(c\)-uri; am verificat deja că avem cel puțin două prin tranzițiile de la \(q_2\) la \(q_3\) și de la \(q_3\) la \(q_4\).
+
+    Începând cu starea \(q'\) avem \dfa{}-ul pentru mulțimea \(\set{ abca, ccba, cabc }\), pe care nu l-am mai scris.
+\end{proof}

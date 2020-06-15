@@ -1,0 +1,267 @@
+\section*{Minimizarea și echivalența automatelor finite}
+
+Ca să minimizăm un \dfa{}, eliminăm stările \emph{inaccesibile} și le grupăm pe cele \emph{redundante}.
+
+O stare este \textbf{inaccesibilă} dacă nu există niciun drum de la starea inițială la ea. Aceste stări pot fi eliminate fără problemă dintr-un automat, nu modifică limbajul acceptat de acesta.
+\begin{figure}[H]
+    \centering
+    \caption*{Exemplu de stări inaccesibile (\(q_A\) și \(q_B\))}
+    \begin{tikzpicture}
+        \node[state, initial] (0) {\(q_0\)};
+        \node[state, right of=0] (1) {\(q_1\)};
+        \node[state, right of=1, accepting] (2) {\(q_2\)};
+
+        \node[state, above left of=1] (a) {\(q_A\)};
+        \node[state, above right of=1] (b) {\(q_B\)};
+
+        \draw (0) edge (1)
+        (1) edge (2)
+        (a) edge (1);
+    \end{tikzpicture}
+\end{figure}
+
+Două stări sunt \textbf{echivalente} (nu pot fi distinse) dacă din ele se acceptă exact aceleași limbaje. Aceste stări pot fi unite într-una singură.
+\begin{figure}[H]
+    \centering
+    \caption*{Exemplu de stări echivalente (\(q_A\) și \(q_B\))}
+    \begin{tikzpicture}
+        \coordinate (pre_top);
+        \node[state, right of=pre_top] (top_left) {\(q_A\)};
+        \node[state, right of=top_left] (top_right) {\(q_0\)};
+
+        \coordinate[below of=pre_top] (pre_bottom);
+        \node[state, below of=top_right] (bottom) {\(q_B\)};
+
+        \node[state, below right of=top_right] (center) {\(q_1\)};
+        \coordinate[right of=center] (after_center);
+
+        \draw (pre_top) edge[dotted] (top_left)
+        (top_left) edge[above] node {\(a\)} (top_right)
+        (top_right) edge[below left] node {\(\lambda\)} (center)
+
+        (pre_bottom) edge[dotted] (bottom)
+        (bottom) edge[below right] node {\(a\)} (center)
+
+        (center) edge[dotted] (after_center);
+    \end{tikzpicture}
+\end{figure}
+
+Asta ne permite să determinăm iterativ care sunt stările echivalente.
+
+\subsection*{Exemplu}
+
+Să se minimizeze următorul DFA:
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] (A) {\(A\)};
+        \node[state, above right of=A] (B) {\(B\)};
+        \node[state, below right of=A] (C) {\(C\)};
+        \node[state, right of=B] (D) {\(D\)};
+        \node[state, accepting, right of=C] (E) {\(E\)};
+
+
+        \draw (A) edge[above left] node {\(0\)} (B)
+        (A) edge[below left] node {\(1\)} (C)
+
+        (B) edge[loop above] node {\(0\)} (B)
+        (B) edge[bend right, below] node {\(1\)} (D)
+
+        (C) edge[left] node {\(0\)} (B)
+        (C) edge[loop below] node {\(1\)} (C)
+
+        (D) edge[bend right, above] node {\(0\)} (B)
+        (D) edge[right] node {\(1\)} (E)
+
+        (E) edge[below left] node {\(0\)} (B)
+        (E) edge[below] node {\(1\)} (C);
+    \end{tikzpicture}
+\end{figure}
+\begin{proof}
+    O rezolvare pas cu pas se poate găsi în \href{https://www.youtube.com/watch?v=Dx2RJ2DXRYs}{acest video}.
+\end{proof}
+
+\section*{Forma Normală Chomsky (FNC)}
+
+În comparație cu automatele finite, la gramatici \textbf{nu} există o unică reprezentare minimă. Putem obține mai multe forme Chomsky pornind de la aceeași gramatică, și nu putem să le comparăm în vreun fel.
+
+O gramatică se află în \textbf{formă normală Chomsky} dacă toate producțiile ei sunt de forma
+\begin{itemize}
+    \item \(A \to a\), unde \(a\) este un terminal
+    \item \(A \to XY\), unde \(X\) și \(Y\) sunt neterminale
+\end{itemize}
+
+\subsection*{Algoritm de obținere a FNC}
+Aceasta este ordinea \href{https://en.wikipedia.org/wiki/Chomsky_normal_form#Order_of_transformations}{recomandată} pentru că limitează numărul de producții care apar în final (altfel, putem avea un număr \emph{exponențial} de producții).
+\begin{enumerate}
+    \item Eliminăm simbolurile cu o buclă care nu se termină. De exemplu, producțiile
+          \begin{align*}
+              A & \to B \\
+              B & \to C \\
+              C & \to A
+          \end{align*}
+          pot fi eliminate.
+
+    \item Eliminăm simbolurile care nu pot fi obținute plecând din simbolul de start. De exemplu, din gramatica
+          \begin{align*}
+              S & \to A \\
+              A & \to a \\
+              X & \to b
+          \end{align*}
+          putem elimina \(X \to b\).
+
+    \item Înlocuim terminalii din producți cu neterminali. Dacă avem, de exemplu:
+          \[A \to AbCDe\]
+          transformăm în
+          \begin{align*}
+              A & \to ABCDE \\
+              B & \to b     \\
+              E & \to e
+          \end{align*}
+
+    \item Eliminăm producțiile de lungime \(> 2\). Orice producție lungă poate fi spartă în mai multe producții mai mici. De exemplu:
+          \[A \to BCDE\]
+          devine:
+          \begin{align*}
+              A & \to BX \\
+              X & \to CY \\
+              Y & \to DE
+          \end{align*}
+          unde toate producțiile au lungime 2.
+
+    \item Eliminăm \(\lambda\)-producțiile. Dacă un neterminal are o producție care merge în \(\lambda\), eliminăm această producție, căutăm toate celelalte producții care îl conțin,
+          \begin{align*}
+              A & \to XaYb           \\
+              X & \to x \mid \lambda \\
+              Y & \to y \mid \lambda
+          \end{align*}
+          devine
+          \begin{align*}
+              A & \to XaYb \mid aYb \mid Xab \mid ab \\
+              X & \to x                              \\
+              Y & \to y
+          \end{align*}
+
+          Dacă într-o producție avem \(n\) neterminali care pot genera \(\lambda\), o vom înlocui cu \(2^n\) producții.
+
+          \begin{observation}
+              Prin acest proces este posibil să-l pierdem pe \(\lambda\) din limbajul generat de gramatică. Obținem ce se numește o gramatică \(\lambda\)-echivalentă cu cea inițială (aceleași cuvinte, dar lipsește \(\lambda\)).
+          \end{observation}
+
+    \item Eliminăm producțiile unitate. Producțiile unitate sunt de forma
+          \[A \to B\]
+          Eliminăm această producție, și înlocuim peste tot unde era \(B\) cu \(A\) (sau invers).
+\end{enumerate}
+
+\subsection*{De ce este utilă această formă?}
+
+Un \emph{parser} este un program care poate determina un cuvânt \textbf{aparține sau nu unei gramatici}, și dacă aparține, \textbf{cum se poate deriva} acesta.
+Un exemplu de algoritm care folosește FNC pentru a determina arborele de derivare este \href{https://en.wikipedia.org/wiki/CYK_algorithm}{algoritmul Cocke-Younger-Kasami (CYK)}.
+
+\subsection*{Exemplu}
+
+Să se reducă la Formă Normală Chomsky următoarea gramatică:
+\begin{align*}
+    S & \to T \mid U \mid X             \\
+    T & \to VaT \mid VaV \mid TaV       \\
+    U & \to VbU \mid VbV \mid UbV       \\
+    V & \to aVbV \mid bVaV \mid \lambda \\
+    X & \to Y                           \\
+    Y & \to X
+\end{align*}
+Aceasta este inspirată de cea care generează \href{https://en.wikipedia.org/wiki/Context-free_grammar#Distinct_number_of_a's_and_b's}{cuvintele cu un număr diferit de \(a\)-uri și \(b\)-uri}.
+
+\begin{proof}
+    Aplicăm pașii de mai sus:
+    \begin{enumerate}
+        \item Eliminăm ultimele două producții, care ciclează:
+              \begin{align*}
+                  S & \to T \mid U \mid X             \\
+                  T & \to VaT \mid VaV \mid TaV       \\
+                  U & \to VbU \mid VbV \mid UbV       \\
+                  V & \to aVbV \mid bVaV \mid \lambda \\
+              \end{align*}
+
+        \item Eliminăm simbolul nefolosit \(X\):
+              \begin{align*}
+                  S & \to T \mid U                    \\
+                  T & \to VaT \mid VaV \mid TaV       \\
+                  U & \to VbU \mid VbV \mid UbV       \\
+                  V & \to aVbV \mid bVaV \mid \lambda
+              \end{align*}
+
+        \item Extragem neterminalii \(a\) și \(b\):
+              \begin{align*}
+                  S & \to T \mid U                    \\
+                  T & \to VAT \mid VAV \mid TAV       \\
+                  U & \to VBU \mid VBV \mid UBV       \\
+                  V & \to AVBV \mid BVAV \mid \lambda \\
+                  A & \to a                           \\
+                  B & \to b
+              \end{align*}
+
+              \newpage{}
+
+        \item Spargem producțiile lungi în mai multe producții scurte, introducând noi neterminali:
+              \begin{align*}
+                  S   & \to T \mid U                     \\
+                  T   & \to V T_1 \mid V T_2 \mid T T_3  \\
+                  T_1 & \to AT                           \\
+                  T_2 & \to AV                           \\
+                  T_3 & \to AV                           \\
+                  U   & \to V U_1 \mid V U_2 \mid U U_3  \\
+                  U_1 & \to BU                           \\
+                  U_2 & \to BV                           \\
+                  U_3 & \to BV                           \\
+                  V   & \to AV_1 \mid B V_3 \mid \lambda \\
+                  V_1 & \to VV_2                         \\
+                  V_2 & \to BV                           \\
+                  V_3 & \to VV_4                         \\
+                  V_4 & \to AV                           \\
+                  A   & \to a                            \\
+                  B   & \to b
+              \end{align*}
+
+        \item Eliminăm producțiile cu \(\lambda\):
+              \begin{align*}
+                  S   & \to T \mid U                                      \\
+                  T   & \to V T_1 \mid T_1 \mid V T_2 \mid T_2 \mid T T_3 \\
+                  T_1 & \to AT                                            \\
+                  T_2 & \to AV \mid A                                     \\
+                  T_3 & \to AV \mid A                                     \\
+                  U   & \to V U_1 \mid U_1 \mid V U_2 \mid U_2 \mid U U_3 \\
+                  U_1 & \to BU                                            \\
+                  U_2 & \to BV \mid B                                     \\
+                  U_3 & \to BV \mid B                                     \\
+                  V   & \to AV_1 \mid B V_3                               \\
+                  V_1 & \to VV_2 \mid V_2                                 \\
+                  V_2 & \to BV \mid B                                     \\
+                  V_3 & \to VV_4 \mid V_4                                 \\
+                  V_4 & \to AV \mid A                                     \\
+                  A   & \to a                                             \\
+                  B   & \to b
+              \end{align*}
+
+        \item Eliminăm producțiile unitate:
+              \begin{align*}
+                  S   & \to V T_1 \mid AT \mid V T_2 \mid AV \mid a \mid T T_3 \\
+                  S   & \to V U_1 \mid BU \mid V U_2 \mid BV \mid b \mid U U_3 \\
+                  T   & \to V T_1 \mid AT \mid V T_2 \mid AV \mid a \mid T T_3 \\
+                  T_1 & \to AT                                                 \\
+                  T_2 & \to AV \mid a                                          \\
+                  T_3 & \to AV \mid a                                          \\
+                  U   & \to V U_1 \mid BU \mid V U_2 \mid BV \mid b \mid U U_3 \\
+                  U_1 & \to BU                                                 \\
+                  U_2 & \to BV \mid b                                          \\
+                  U_3 & \to BV \mid b                                          \\
+                  V   & \to A V_1 \mid B V_3                                   \\
+                  V_1 & \to VV_2 \mid BV \mid b                                \\
+                  V_2 & \to BV \mid b                                          \\
+                  V_3 & \to VV_4 \mid AV \mid a                                \\
+                  V_4 & \to AV \mid a                                          \\
+                  A   & \to a                                                  \\
+                  B   & \to b
+              \end{align*}
+              Toate producțiile au fie doi neterminali în dreapta fie un singur terminal.
+    \end{enumerate}
+\end{proof}
