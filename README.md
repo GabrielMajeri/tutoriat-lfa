@@ -1,5 +1,7 @@
 # Tutoriate de LFA
 
+![CI](https://github.com/GabrielMajeri/tutoriat-lfa/workflows/CI/badge.svg)
+
 ## Descriere
 
 Exerciții rezolvate și explicate la materia Limbaje Formale și Automate.
