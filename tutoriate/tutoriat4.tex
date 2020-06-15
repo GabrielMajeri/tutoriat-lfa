@@ -6,7 +6,7 @@ Limbajele acceptate de \pda{} sunt aceleași cu limbajele generate de \textbf{gr
 
 Automatele pushdown deterministe sunt incluse \textbf{strict} în cele nedeterministe.
 De exemplu, se poate demonstra că limbajul
-\[\lang = \set{ w w^R | w \in \set{a, b}^* }\]
+\[\limbaj = \set{ w w^R | w \in \set{a, b}^* }\]
 nu poate fi acceptat de un \dpda{}, dar este destul de simplu să facem un \npda{} pentru el.
 
 Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în care \pda{}-ul începe execuția, presupunem că acest simbol se află pe stivă, și îl vom lăsa tot timpul la baza stivei.
@@ -16,7 +16,7 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
 \begin{exercise}[exercițiul 10 din examen iunie 2011]
     Construiți un automat pushdown (\pda{}), eventual determinist, pentru limbajul
     \[
-        \lang = \set{ w | w \in \set{a, b, c}^*, \abs{w}_a = \abs{w}_b + 2 }
+        \limbaj = \set{ w | w \in \set{a, b, c}^*, \abs{w}_a = \abs{w}_b + 2 }
     \]
 \end{exercise}
 
@@ -56,7 +56,7 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
 \begin{exercise}[exercițiul 11 din examen iunie 2013]
     Construiți un automat pushdown (\pda{}), eventual determinist, pentru limbajul
     \[
-        \lang = \set{ w | w \in \set{0, 1, 2}^*, 4\abs{w}_0 + 1 = \abs{w}_2 }
+        \limbaj = \set{ w | w \in \set{0, 1, 2}^*, 4\abs{w}_0 + 1 = \abs{w}_2 }
     \]
 \end{exercise}
 
@@ -65,7 +65,7 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
 \begin{exercise}[exercițiul 10 din examen iunie 2014]
     Construiți un automat pushdown (\pda{}) pentru limbajul
     \[
-        \lang = \set{ a^n b^n | n \geq 0 } \cup \set{ a^n b^{3n} | n \geq 0 }
+        \limbaj = \set{ a^n b^n | n \geq 0 } \cup \set{ a^n b^{3n} | n \geq 0 }
     \]
 \end{exercise}
 
@@ -120,7 +120,7 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
 \begin{exercise}[exercițiul 11 din examen iunie 2017]
     Construiți un automat pushdown (\pda{}) cu acceptare prin stivă vidă pentru limbajul
     \[
-        \lang = \set{ w | w \in \set{a, b}^*, 2 \abs{w}_a \neq 3 \abs{w}_b + 2 } \cup \set{ aaab, bbba }
+        \limbaj = \set{ w | w \in \set{a, b}^*, 2 \abs{w}_a \neq 3 \abs{w}_b + 2 } \cup \set{ aaab, bbba }
     \]
 \end{exercise}
 
@@ -129,7 +129,7 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
 \begin{exercise}[exercițiul 11 din examen iunie 2018]
     Construiți un automat pushdown (\pda{}) pentru limbajul
     \[
-        \lang = \set{ w w^R c^i | w \in \set{a, b}^*, i \geq 2 } \cup \set{ abca, ccba, cabc }
+        \limbaj = \set{ w w^R c^i | w \in \set{a, b}^*, i \geq 2 } \cup \set{ abca, ccba, cabc }
     \]
     unde \(w^R\) înseamnă oglinditul lui \(w\), de exemplu \((abcd)^R = dcba\).
 \end{exercise}

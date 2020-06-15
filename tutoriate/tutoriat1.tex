@@ -16,7 +16,7 @@ s
         \draw (1) edge[bend left, above] node{a} (2)
         (2) edge[bend left, below] node{a} (1);
     \end{tikzpicture}
-    \caption*{Un DFA care acceptă limbajul \(\lang = \Set{a^{2k + 1} | k \in \naturals}\)}
+    \caption*{Un DFA care acceptă limbajul \(\limbaj = \Set{a^{2k + 1} | k \in \naturals}\)}
 \end{figure}
 
 \begin{observation}
@@ -39,7 +39,7 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
 
 \begin{exercise}
     Scrieți un automat finit determinist care să accepte limbajul
-    \[\lang = \Set{ a^{2k} | k \geq 0 }\]
+    \[\limbaj = \Set{ a^{2k} | k \geq 0 }\]
 \end{exercise}
 \begin{proof}
     Cel mai simplu automat care acceptă acest limbaj este:
@@ -94,7 +94,7 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
 
 \begin{exercise}[bazat pe exercițiul 9 din examen iunie 2011]
     Construiți o gramatică independentă de context care să genereze limbajul
-    \[\lang = \Set{ a^{2k} b^l a^k | k \geq 0, l \geq 1 }\]
+    \[\limbaj = \Set{ a^{2k} b^l a^k | k \geq 0, l \geq 1 }\]
 \end{exercise}
 \begin{proof}
     Vom genera partea exterioară a cuvântului (\textit{a}-urile) prin \(A\) și oricâte \textit{b}-uri prin \(B\).
@@ -109,7 +109,7 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
 
 \begin{exercise}[exercițiul 8 din examen iunie 2013]
     Construiți o gramatică independentă de context care să genereze limbajul
-    \[\lang = \Set{ 0^{4k} 1^l 0^k | k \geq 0, l \geq 1 } \cdot \Set{ 0^i 1^{j + 3} | i \neq j}\]
+    \[\limbaj = \Set{ 0^{4k} 1^l 0^k | k \geq 0, l \geq 1 } \cdot \Set{ 0^i 1^{j + 3} | i \neq j}\]
 \end{exercise}
 \begin{proof}
     Pentru a genera prima mulțime, putem folosi producțiile:
@@ -130,11 +130,11 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
 
 \begin{exercise}[exercițiul 10 din examen iunie 2018]
     Construiți o gramatică independentă de context care să genereze limbajul
-    \[\lang = \Set{ a^{m + n} b^k a^{m + k + i} b^n | i, k, m, n \geq 1 }\]
+    \[\limbaj = \Set{ a^{m + n} b^k a^{m + k + i} b^n | i, k, m, n \geq 1 }\]
 \end{exercise}
 \begin{proof}
     Putem rescrie limbajul ca:
-    \[\lang = \Set{ a^n a^m b^k a^k a^m a^i b^n | i, k, m, n \geq 1 }\]
+    \[\limbaj = \Set{ a^n a^m b^k a^k a^m a^i b^n | i, k, m, n \geq 1 }\]
     Acum se vede mult mai ușor că se poate genera limbajul:
     \begin{align*}
         S & \rightarrow a S b \mid a A b \tag{generează \(a^n \dots b^n\)} \\

@@ -14,7 +14,7 @@ Ca să arăți că o anumită problemă \emph{nu este decidabilă}, trebuie să 
 
 \subsection*{Egalitatea de limbaje}
 
-Ca să verifici dacă două limbaje regulate \(\lang_1, \lang_2\) sunt egale, construiești automate finite care să accepte \(\lang_1\) respectiv \(\lang_2\), apoi aplici algoritmul din curs pentru a verifica că automatele sunt echivalente.
+Ca să verifici dacă două limbaje regulate \(\limbaj_1, \limbaj_2\) sunt egale, construiești automate finite care să accepte \(\limbaj_1\) respectiv \(\limbaj_2\), apoi aplici algoritmul din curs pentru a verifica că automatele sunt echivalente.
 
 Pentru limbaje independente de context, nu se poate verifica (nu este decidabilă) egalitatea.
 
@@ -34,12 +34,12 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că  \(\lang_1 \subseteq \lang_2\) și \(\lang_2 \in REG\). Atunci \(\lang_1 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2\) cu proprietatea că  \(\limbaj_1 \subseteq \limbaj_2\) și \(\limbaj_2 \in REG\). Atunci \(\limbaj_1 \in REG\).
 \end{exercise}
 \begin{proof}
-    Fals, un contraexemplu este să luăm \(\lang_1 = \set{ a^n b^n | n \in \naturals }\), \(\lang_2 = \set{ a, b }^*\).
+    Fals, un contraexemplu este să luăm \(\limbaj_1 = \set{ a^n b^n | n \in \naturals }\), \(\limbaj_2 = \set{ a, b }^*\).
 
-    Avem că \(\lang_1 \subseteq \lang_2\) dar știm că \(\lang_1\) nu este regulat.
+    Avem că \(\limbaj_1 \subseteq \limbaj_2\) dar știm că \(\limbaj_1\) nu este regulat.
 \end{proof}
 
 \begin{exercise}
@@ -59,7 +59,7 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \subsubsection*{Examen 2013}
 
 \begin{exercise}
-    Există o gramatică regulată \(G\) astfel încât nu există niciun automat finit nedeterminist (\nfa) care să accepte exact \(\lang(G)\).
+    Există o gramatică regulată \(G\) astfel încât nu există niciun automat finit nedeterminist (\nfa) care să accepte exact \(\limbaj(G)\).
 \end{exercise}
 \begin{proof}
     Afirmația este falsă. Prin definiție, gramaticile \emph{regulate} definesc un limbaj regulat. Pentru orice limbaj regulat se poate scrie un \nfa{}.
@@ -73,12 +73,12 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că \(\lang_2 \subseteq \lang_1\) și \(\lang_2 \in CF\). Atunci \(\lang_1 \in CF\).
+    Fie limbajele \(\limbaj_1, \limbaj_2\) cu proprietatea că \(\limbaj_2 \subseteq \limbaj_1\) și \(\limbaj_2 \in CF\). Atunci \(\limbaj_1 \in CF\).
 \end{exercise}
 \begin{proof}
-    Putem avea \(\lang_2 = \set{ a^n b^n | n \in \naturals }\) care știm că este independent de context, și \(\lang_1 = \lang_2 \cup \set{ c^p | p \text{ prim} }\).
+    Putem avea \(\limbaj_2 = \set{ a^n b^n | n \in \naturals }\) care știm că este independent de context, și \(\limbaj_1 = \limbaj_2 \cup \set{ c^p | p \text{ prim} }\).
 
-    Avem că \(\lang_2 \subseteq \lang_1\) dar \(\lang_1 \not\in CF\).
+    Avem că \(\limbaj_2 \subseteq \limbaj_1\) dar \(\limbaj_1 \not\in CF\).
 \end{proof}
 
 \begin{exercise}
@@ -91,17 +91,17 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \subsubsection*{Examen 2014}
 
 \begin{exercise}
-    Există o gramatică regulată \(G\) astfel încât nu există nicio expresie regulată \(E\) cu proprietatea că \(\lang(E) = \lang(G)\).
+    Există o gramatică regulată \(G\) astfel încât nu există nicio expresie regulată \(E\) cu proprietatea că \(\limbaj(E) = \limbaj(G)\).
 \end{exercise}
 \begin{proof}
     La fel ca la exercițiul 5, gramaticile regulate și expresiile regulate definesc aceeași familie de limbaje, limbajele regulate.
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2\) cu proprietatea că \(\lang_1 \subseteq \lang_2\) și \(\lang_1 \in REG\). Deci \(\lang_2 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2\) cu proprietatea că \(\limbaj_1 \subseteq \limbaj_2\) și \(\limbaj_1 \in REG\). Deci \(\limbaj_2 \in REG\).
 \end{exercise}
 \begin{proof}
-    Fals, putem da un contraexemplu ca la exercițiul 7, cu \(\lang_1 = \set{ a^n | n  }\) și \(\lang_2 = \lang_1 \cup \set{ b^p | p \text{ prim}}\).
+    Fals, putem da un contraexemplu ca la exercițiul 7, cu \(\limbaj_1 = \set{ a^n | n  }\) și \(\limbaj_2 = \limbaj_1 \cup \set{ b^p | p \text{ prim}}\).
 \end{proof}
 
 \begin{exercise}
@@ -121,15 +121,15 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \subsubsection*{Examen 2016}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cup \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2, \limbaj_3\) cu proprietatea că \(\limbaj_1 \cup \limbaj_2 = \limbaj_3\) și \(\limbaj_2, \limbaj_3 \in REG\). Deci \(\limbaj_1 \in REG\).
 \end{exercise}
 \begin{proof}
-    Fals, putem avea \(\lang_2 = \lang_3 = \set{ a, b }^*\), și \(\lang_1 = \set{ a^n b^n | n \in \naturals}\), care nu este regulat.
+    Fals, putem avea \(\limbaj_2 = \limbaj_3 = \set{ a, b }^*\), și \(\limbaj_1 = \set{ a^n b^n | n \in \naturals}\), care nu este regulat.
 \end{proof}
 
 \begin{exercise}
     Există o gramatică regulată \(G\) peste alfabetul \(\set{ a, b, c }\) astfel încât nu există niciun \nfa{} \(A\) cu proprietatea că
-    \[\lang(A) = \lang(G) \cup \set{ acccab, bbaabb }\]
+    \[\limbaj(A) = \limbaj(G) \cup \set{ acccab, bbaabb }\]
 \end{exercise}
 \begin{proof}
     Limbajul modelat de \(G\) este unul regulat, deoarece gramatica este regulată. De asemenea \(\set{ acccab, bbaabb }\) este o mulțime finită de cuvinte, deci este un limbaj finit, deci limbaj regulat.
@@ -146,7 +146,7 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
     Toate cuvintele din acest limbaj au lungime \(\abs{w} + \abs{w^R} = 2 \abs{w}\), care este un număr par. Trebuie să mai adăugăm o literă ca lungimea să fie impară.
 
     Dacă adăugăm o literă distinctivă în mijloc (de exemplu un \(c\)), limbajul ar putea fi acceptat și de automate push-down deterministe. Soluția este să adăugăm litera la început sau la final:
-    \[\lang = \set{ w w^R c | w \in \set{a, b}^* }\]
+    \[\limbaj = \set{ w w^R c | w \in \set{a, b}^* }\]
 \end{proof}
 
 \begin{exercise}
@@ -159,7 +159,7 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \subsubsection*{Examen 2017}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cup \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2, \limbaj_3\) cu proprietatea că \(\limbaj_1 \cup \limbaj_2 = \limbaj_3\) și \(\limbaj_2, \limbaj_3 \in REG\). Deci \(\limbaj_1 \in REG\).
 \end{exercise}
 \begin{proof}
     Identic cu exercițiul 13.
@@ -167,7 +167,7 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 
 \begin{exercise}
     Există o gramatică neambiguă \(G\) peste alfabetul \(\set{ a, b, c }\) astfel încât nu există niciun \nfa{} \(A\) cu proprietatea că
-    \[\lang(A) = \lang(G) \cup \set{ acccab, bbaabb }\]
+    \[\limbaj(A) = \limbaj(G) \cup \set{ acccab, bbaabb }\]
 \end{exercise}
 \begin{proof}
     O gramatică \emph{neambiguă} este independentă de context, nu neapărat regulată. Putem să luăm contraexemplu gramatica
@@ -204,27 +204,27 @@ Pentru fiecare dintre următoarele exerciții, cerința este să se \textbf{just
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cap \lang_2 = \lang_3\) și \(\lang_1, \lang_2 \in CFL\). Deci \(\lang_3 \in CFL\).
+    Fie limbajele \(\limbaj_1, \limbaj_2, \limbaj_3\) cu proprietatea că \(\limbaj_1 \cap \limbaj_2 = \limbaj_3\) și \(\limbaj_1, \limbaj_2 \in CFL\). Deci \(\limbaj_3 \in CFL\).
 \end{exercise}
 \begin{proof}
-    Fals, limbajele independente de context nu sunt închise la intersecție. Contraexemplul clasic este \(\lang_1 = \set{ a^n b^n c^i | n \in \naturals, i \in \naturals }\), \(\lang_2 = \set{ a^j b^m c^m | j \in \naturals, m \in \naturals }\).
+    Fals, limbajele independente de context nu sunt închise la intersecție. Contraexemplul clasic este \(\limbaj_1 = \set{ a^n b^n c^i | n \in \naturals, i \in \naturals }\), \(\limbaj_2 = \set{ a^j b^m c^m | j \in \naturals, m \in \naturals }\).
 
-    \(\lang_3\) nu este independent de context:
-    \[\lang_1 \cap \lang_2 = \set{ a^n b^n c^n | n \in \naturals } = \lang_3\]
+    \(\limbaj_3\) nu este independent de context:
+    \[\limbaj_1 \cap \limbaj_2 = \set{ a^n b^n c^n | n \in \naturals } = \limbaj_3\]
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \cap \overline{\lang_2} = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2, \limbaj_3\) cu proprietatea că \(\limbaj_1 \cap \overline{\limbaj_2} = \limbaj_3\) și \(\limbaj_2, \limbaj_3 \in REG\). Deci \(\limbaj_1 \in REG\).
 \end{exercise}
 \begin{proof}
-    Fals, un contraexemplu este \(\lang_1 = \set{ a^n b^n | n \in \naturals }\), \(\lang_2 = \set{a, b}^*\), \(\lang_3 = \varnothing\).
+    Fals, un contraexemplu este \(\limbaj_1 = \set{ a^n b^n | n \in \naturals }\), \(\limbaj_2 = \set{a, b}^*\), \(\limbaj_3 = \varnothing\).
 
     Avem că
-    \[\lang_1 \cap \overline{\lang_2} = \lang_1 \cap \overline{\set{ a, b }^* } = \lang_1 \cap \varnothing = \varnothing = \lang_3\]
+    \[\limbaj_1 \cap \overline{\limbaj_2} = \limbaj_1 \cap \overline{\set{ a, b }^* } = \limbaj_1 \cap \varnothing = \varnothing = \limbaj_3\]
 \end{proof}
 
 \begin{exercise}
-    Fie limbajele \(\lang_1, \lang_2, \lang_3\) cu proprietatea că \(\lang_1 \setminus \lang_2 = \lang_3\) și \(\lang_2, \lang_3 \in REG\). Deci \(\lang_1 \in REG\).
+    Fie limbajele \(\limbaj_1, \limbaj_2, \limbaj_3\) cu proprietatea că \(\limbaj_1 \setminus \limbaj_2 = \limbaj_3\) și \(\limbaj_2, \limbaj_3 \in REG\). Deci \(\limbaj_1 \in REG\).
 \end{exercise}
 \begin{proof}
     Deoarece \(A \setminus B = A \cap \overline{B}\), această problemă este echivalentă cu exercițiul 23.

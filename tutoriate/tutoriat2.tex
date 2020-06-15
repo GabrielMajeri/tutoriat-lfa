@@ -1,7 +1,7 @@
 \section*{Lema de pompare}
 
 Să se demonstreze că limbajul
-\[\lang = \Set{ a^n b^n c^2 | n \in \naturals^* }\]
+\[\limbaj = \Set{ a^n b^n c^2 | n \in \naturals^* }\]
 nu este regulat.
 
 Pentru a demonstra că acesta nu este un limbaj regulat, trebuie să demonstrăm că nu există niciun \dfa/\nfa/\lnfa{} care să îl accepte.
@@ -30,27 +30,27 @@ O demonstrație că un limbaj nu este regulat/nu este independent de context dec
 
 \subsection*{Pentru limbaje regulate}
 
-Fie \(\lang\) un limbaj regulat. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \lang\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x y z\) cu proprietățile:
+Fie \(\limbaj\) un limbaj regulat. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \limbaj\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x y z\) cu proprietățile:
 \begin{itemize}
     \item \(\abs{y} \geq 1\)
     \item \(\abs{xy} \leq n_0\)
-    \item \(\forall i \in \naturals\), \(x y^i z \in \lang\)
+    \item \(\forall i \in \naturals\), \(x y^i z \in \limbaj\)
 \end{itemize}
 
 \subsection*{Pentru limbaje independente de context}
 
-Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \lang\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x u y v z\) cu proprietățile:
+Fie \(\limbaj\) un limbaj independent de context. Există un \(n_0 \in \naturals^*\) care depinde de limbaj, cu proprietatea că orice cuvânt \(w \in \limbaj\), cu \(\abs{w} \geq n_0\), se poate descompune în \(w = x u y v z\) cu proprietățile:
 \begin{itemize}
     \item \(\abs{u v} \geq 1\)
     \item \(\abs{u y v} \leq n_0\)
-    \item \(\forall i \in \naturals\), \(x u^i y v^i z \in \lang\)
+    \item \(\forall i \in \naturals\), \(x u^i y v^i z \in \limbaj\)
 \end{itemize}
 
 \subsection*{Exerciții}
 
 \begin{exercise}[exercițiul 8 din examen iunie 2011]
     Demonstrați folosind lema de pompare că limbajul
-    \[\lang = \set{ a^{2k} b^l a^{k} | k \geq 0, l \geq 1 }\]
+    \[\limbaj = \set{ a^{2k} b^l a^{k} | k \geq 0, l \geq 1 }\]
     nu este regulat.
 \end{exercise}
 \begin{proof}
@@ -58,8 +58,8 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
 
     Ca să simplificăm problema, vom intersecta limbajul cu un limbaj regulat.
 
-    Presupunem că \(\lang\) este regulat. Atunci limbajul
-    \[\lang' = \lang \cap a^* b a^* = \set{ a^{2k} b a^k | k \geq 0 }\]
+    Presupunem că \(\limbaj\) este regulat. Atunci limbajul
+    \[\limbaj' = \limbaj \cap a^* b a^* = \set{ a^{2k} b a^k | k \geq 0 }\]
     este la rândul lui regulat (am folosit o expresie regulată ca să descriu limbajul cu care intersectez).
 
     Fie \(n_0 \in \naturals^*\) constanta din lema de pompare pentru limbaje regulate.
@@ -94,7 +94,7 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
     \end{align*}
 
     Din lemă avem că
-    \[\forall i \in \naturals, x y^i z \in \lang'\]
+    \[\forall i \in \naturals, x y^i z \in \limbaj'\]
     Pentru \(i = 0\) obținem
     \begin{align*}
         x y^0 z & = a^p \, a^{2 n_0 - q - p} \, b \, a^{n_0} = \\
@@ -104,19 +104,19 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
     \[2 n_0 - q = 2 n_0\]
     Dar știm deja că \(q \geq 1\), deci contradicție.
 
-    Presupunerea că \(\lang\) este regulat este falsă.
+    Presupunerea că \(\limbaj\) este regulat este falsă.
 \end{proof}
 
 \begin{exercise}[exercițiul 8 din examen iunie 2014]
     Demonstrați că limbajul
-    \[\lang = \set{ a^k b^{3l} a^l | k \geq 1, l \geq 0 }\]
+    \[\limbaj = \set{ a^k b^{3l} a^l | k \geq 1, l \geq 0 }\]
     nu este regulat.
 \end{exercise}
 \begin{proof}
-    Presupunem că \(\lang\) este regulat.
+    Presupunem că \(\limbaj\) este regulat.
 
     Putem intersecta limbajul cu \(a b^* a^*\), și obținem
-    \[\lang' = \Set{ a b^{3l} a^l | l \geq 0 }\]
+    \[\limbaj' = \Set{ a b^{3l} a^l | l \geq 0 }\]
 
     Fie \(n_0 \in \naturals\) din lema de pompare pentru limbaje regulate.
 
@@ -147,7 +147,7 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
               \end{align*}
 
               Din lema de pompare avem că
-              \[\forall i \in \naturals, x \, y^i \, z \in \lang'\]
+              \[\forall i \in \naturals, x \, y^i \, z \in \limbaj'\]
 
               Luăm \(i = 0\). Obținem cuvântul
               \begin{align*}
@@ -156,7 +156,7 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
               \end{align*}
               care nu aparține limbajului deoarece \(3 n_0 - q < 3 n_0\).
 
-              Contradicție cu lema de pompare, deci \(\lang'\) nu este regulat.
+              Contradicție cu lema de pompare, deci \(\limbaj'\) nu este regulat.
 
         \item Cazul în care \(x\) nu-l conține pe \(a\) (este \(\lambda\)):
               \[w = \underbrace{}_{x} \underbrace{a bb\dots{}bbb}_{y} \underbrace{bbb\dots{}bbb aa\dots{}aa}_{z}\]
@@ -175,11 +175,11 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
 
 \begin{exercise}[exercițiul 9 din examen iunie 2016]
     Demonstrați că limbajul
-    \[\lang = \set{ w a^k w | w \in \set{a, b, c}^*, k \geq 0 }\]
+    \[\limbaj = \set{ w a^k w | w \in \set{a, b, c}^*, k \geq 0 }\]
     nu este regulat.
 \end{exercise}
 \begin{proof}
-    Presupunem că \(\lang\) ar fi regulat.
+    Presupunem că \(\limbaj\) ar fi regulat.
 
     Fie \(n_0 \in \naturals\) din lema de pompare.
 
@@ -209,14 +209,14 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
 
 \begin{exercise}[exercițiul 10 din examen iunie 2017]
     Demonstrați că limbajul
-    \[\lang = \set{ a^n b^m | n \text{ pătrat perfect}, m \geq 5 }\]
+    \[\limbaj = \set{ a^n b^m | n \text{ pătrat perfect}, m \geq 5 }\]
     nu este independent de context.
 \end{exercise}
 \begin{proof}
-    Presupunem că \(\lang\) este independent de context.
+    Presupunem că \(\limbaj\) este independent de context.
 
     Îl intersectăm cu \(a^* b^5\) și obținem
-    \[\lang' = \set{ a^n b^5 | n \text{ pătrat perfect } }\]
+    \[\limbaj' = \set{ a^n b^5 | n \text{ pătrat perfect } }\]
 
     Fie \(n_0 \in \naturals\) din lema de pompare.
 
@@ -254,19 +254,19 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
 
     Cu siguranță \(q + s \leq 2 n_0 + 1\), deci nu avem un pătrat perfect. Cuvântul nu aparține limbajului.
 
-    În concluzie, \(\lang\) nu este independent de context.
+    În concluzie, \(\limbaj\) nu este independent de context.
 \end{proof}
 
 \begin{exercise}[exercițiul bonus din examen iunie 2013]
     Demonstrați că limbajul
-    \[\lang = \set{ 0^n 1^m | n > 0, m \text{ prim} }\]
+    \[\limbaj = \set{ 0^n 1^m | n > 0, m \text{ prim} }\]
     nu este independent de context.
 \end{exercise}
 \begin{proof}
-    Presupunem că \(\lang\) este independent de context.
+    Presupunem că \(\limbaj\) este independent de context.
 
     Îl putem intersecta cu \(0 1^*\) și obținem
-    \[\lang = \set{ 0 1^m | m \text{ prim } }\]
+    \[\limbaj = \set{ 0 1^m | m \text{ prim } }\]
 
     Fie \(n_0 \in \naturals\) din lema de pompare.
 
@@ -331,12 +331,12 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
               Asemănător cu cazurile de mai sus.
     \end{enumerate}
 
-    În concluzie, \(\lang\) nu este independent de context.
+    În concluzie, \(\limbaj\) nu este independent de context.
 \end{proof}
 
 \begin{exercise}[exercițiul 11 din examen iunie 2011]
     Demonstrați că limbajul
-    \[\lang = \set{ a^i b^j c^k | i < j \text{ și } i + 2j + 3 < k }\]
+    \[\limbaj = \set{ a^i b^j c^k | i < j \text{ și } i + 2j + 3 < k }\]
     nu este independent de context.
 \end{exercise}
 \begin{proof}
@@ -377,12 +377,12 @@ Fie \(\lang\) un limbaj independent de context. Există un \(n_0 \in \naturals^*
 
 \begin{exercise}[exercițiul 10 din examen iunie 2016]
     Demonstrați că limbajul
-    \[\lang = \set{ a^n b^m c^r | n \geq m \geq r \geq 150 }\]
+    \[\limbaj = \set{ a^n b^m c^r | n \geq m \geq r \geq 150 }\]
     nu este independent de context.
 \end{exercise}
 \begin{proof}
     Limbajul se poate rescrie ca
-    \[\lang = \set{ a^n b^m c^r | n \geq m, m \geq r, r \geq 150 }\]
+    \[\limbaj = \set{ a^n b^m c^r | n \geq m, m \geq r, r \geq 150 }\]
 
     Alegem un cuvânt cum ar fi \(w = a^{n_0} b^{n_0} c^{n_0}\) și aplicăm lema de pompare.
 
