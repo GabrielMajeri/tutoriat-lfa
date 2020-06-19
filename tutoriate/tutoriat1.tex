@@ -269,8 +269,8 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
             \node[state, accepting, below right of=2] (5) {\(q_5\)};
 
             \draw (0) edge[above] node{\(a^* b\)} (2)
-            (2) edge[loop above] node{b} (2)
-            (2) edge[bend left, right] node{\((((a + a c^* b) a)^* b^*)^* \cdot (a + ac^* b)\)} (5)
+            (2) edge[loop above] node{\(b + (b^* (a + ac^* b) a)^*\)} (2)
+            (2) edge[bend left, right] node{\((a + ac^* b) \cdot (a b^* (a + ac^* b))^*\)} (5)
             (2) edge[bend right, left] node{\(\lambda\)} (5);
         \end{tikzpicture}
     \end{figure}
@@ -283,8 +283,8 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
             \node[state, accepting, below right of=2] (5) {\(q_5\)};
 
             \draw (0) edge[above] node{\(a^* b\)} (2)
-            (2) edge[loop above] node{b} (2)
-            (2) edge[bend left, right] node{\(\lambda + (((a + a c^* b) a)^* b^*)^* \cdot (a + ac^* b)\)} (5);
+            (2) edge[loop above] node{\(b + (b^* (a + ac^* b) a)^*\)} (2)
+            (2) edge[bend left, right] node{\(\lambda + (a + ac^* b) \cdot (a b^* (a + ac^* b))^*\)} (5);
         \end{tikzpicture}
     \end{figure}
 
@@ -300,5 +300,5 @@ De asemenea, nu pot fi mai mult de două variabile corelate. De exemplu \(a^n b^
     \end{figure}
 
     Unde \(E\) este expresia regulată cerută:
-    \[a^* b b^* \cdot (\lambda + (((a + a c^* b) a)^* b^*)^* \cdot (a + ac^* b))\]
+    \[a^* b (b + (b^* (a + ac^* b) a)^*)^* \cdot (\lambda + (a + ac^* b) \cdot (a b^* (a + ac^* b))^*)\]
 \end{proof}
