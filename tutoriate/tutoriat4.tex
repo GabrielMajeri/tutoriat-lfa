@@ -45,10 +45,17 @@ Vom folosi simbolul \(Z_0\) pentru a indica o stivă vidă: în momentul în car
                     \(b, B/BB\) \\
                     \(b, A/\lambda\)
                 } (1)
+            (1) edge[loop below] node[align=center] {
+                    \(c, Z_0/Z_0\) \\
+                    \(c, A/A\) \\
+                    \(c, B/B\)
+                } (1)
             (2) edge[above] node {\(\lambda, A/\lambda\)} (3)
             (3) edge[above] node {\(\lambda, A/\lambda\)} (4);
         \end{tikzpicture}
     \end{figure}
+
+    Pentru că avem și \(c\) în limbaj, trebuie să-l ignorăm.
 
     În starea \(q_1\), automatul ciclează, citește caractere și le pune pe stivă. La un moment dat, acesta trece nedeterminist în \(q_2\). Tranzițiile de la \(q_2\) la \(q_3\) și de la \(q_3\) la \(q_4\) verifică că avem două \(a\)-uri în plus pe stivă.
 \end{proof}
