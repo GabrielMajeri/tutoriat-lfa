@@ -1,0 +1,118 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{romanian}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{unicode-math}
+
+\newtheorem*{theorem}{Teoremă}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definiție}
+
+\theoremstyle{remark}
+\newtheorem*{example}{Exemplu}
+\newtheorem*{property}{Proprietate}
+
+\title{Minimizare DFA}
+\author{To do}
+\date{}
+
+\DeclareMathOperator{\rhoequiv}{\rho}
+\newcommand{\wordequiv}{\operatorname{\equiv}_{L}}
+\newcommand{\notwordequiv}{\operatorname{\not\equiv}_{L}}
+\newcommand{\dfaequiv}[1][M]{\operatorname{\equiv}_{#1}}
+
+\begin{document}
+
+\maketitle
+
+Reamintim următoarele noțiuni de algebră:
+\begin{itemize}
+    \item Numim \emph{relație} (binară) peste o mulțime \(A\) orice submulțime \(\rho\) a produsului cartezian \(A \times A\).
+    \item \(x \rhoequiv y\) se citește „\(x\) este în relație cu \(y\)” și înseamnă că perechea \((x, y) \in \rho\).
+    \item Relația \(\rho\) este de \emph{echivalență} dacă este:
+    \begin{itemize}
+        \item \emph{reflexivă}: \(x \rhoequiv x\) pentru orice \(x \in A\)
+        \item \emph{tranzitivă}: \(x \rhoequiv y \land y \rhoequiv z \implies x \rhoequiv z\), pentru orice \(x, y, z \in A\)
+        \item \emph{simetrică}: \(x \rhoequiv y \implies y \rhoequiv x\), pentru orice \(x, y \in A\)
+    \end{itemize}
+    \item Notăm clasa de echivalență a lui \(x \in A\) cu \([x] = \Set{ a \in A | a \rhoequiv x}\)
+    \item Mulțimea factor este mulțimea formată din toate clasele de echivalență  \(A / \rho = \Set{ [a] | a \in A }\).
+    \item Spunem că o relație de echivalență este de indice finit dacă numărul de clase de echivalență determinate de aceasta este finit.
+\end{itemize}
+
+\begin{definition}[Relația de echivalență dată de un limbaj]\label{wordequiv}
+Fie \(L \subseteq \Sigma^*\) un limbaj peste alfabetul \(\Sigma\). Definim relația binară pe cuvinte \(x \wordequiv y\) dacă și numai dacă \(\forall z \in \Sigma^*, xz \in L \iff yz \in L\).
+Altfel spus, dacă cuvintele sunt echivalente, atunci oricum am adăuga un sufix la ele, nu le putem distinge.
+\end{definition}
+
+\begin{property}
+Relația \ref{wordequiv} este de echivalență.
+\end{property}
+\begin{proof}
+Reiese din faptul că \(\iff\) este relație de echivalență.
+\end{proof}
+
+\begin{example}
+Pentru \(L = \Set{ a^i b^j | \forall i, j \geq 1 }\) și cuvintele \(x = a\) și \(y = aaa\), avem \(x \wordequiv y\). Dacă mai adăugăm orice sufix de forma \(z = a^m b^n\) ambele rămân în limbaj, iar orice alt sufix le va scoate pe ambele din limbaj.
+\end{example}
+
+\begin{definition}[Invarianță la dreapta la concatenare]
+O relație binară pe cuvinte se numește \emph{invariantă la dreapta} față de concatenare dacă pentru orice două cuvinte \(x, y\) peste alfabetul \(\Sigma\), dacă cuvintele sunt în relație, atunci orice sufix le-am adăuga, ele rămân în relație.
+\[
+x \operatorname{R} y \implies \forall z \in \Sigma^*, xz \operatorname{R} yz
+\]
+\end{definition}
+
+\begin{definition}[Relația dată de un automat]\label{dfaequiv}
+Fie \(M = (Q, \Sigma, \delta, q_0, F)\) un DFA. Spunem că două cuvinte sunt echivalente față de \(M\) dacă plecând din starea inițială, cuvintele sunt ajung în aceeași stare.
+\[
+x \dfaequiv y \iff \delta(q_0, x) = \delta(q_0, y)
+\]
+\end{definition}
+
+\begin{property}
+Relația \ref{dfaequiv} este de echivalență.
+\end{property}
+\begin{proof}
+Reiese din faptul că egalitatea (dintre stări, care sunt reprezentate prin numere) este o relație de echivalență.
+\end{proof}
+
+\begin{property}
+Relația \ref{dfaequiv} este invariantă la dreapta.
+\end{property}
+\begin{proof}
+Fie \(x, y \in \Sigma^*\) cu \(x \dfaequiv y\). Fie \(z \in \Sigma^*\) un cuvânt arbitrar. Trebuie să arătăm că \(xz \dfaequiv yz\):
+\begin{align*}
+    \delta(q_0, xz) &= \delta(\delta(q_0, x), z) & \text{din definiția lui } \delta \\
+    &= \delta(\delta(q_0, y), z) & \text{din } x \dfaequiv y \\
+    &= \delta(q_0, yz)
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Myhill--Nerode]
+Fie \(L\) un limbaj peste \(\Sigma\). Următoarele afirmații sunt echivalente:
+\begin{enumerate}
+    \item \(L\) este regulat.
+    \item \(L\) este reuniunea claselor de echivalență ale unei relații de echivalență invariantă la dreapta de indice finit.
+    \item Relația de echivalență pe cuvinte \(\wordequiv\) este de indice finit.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+~
+\begin{itemize}
+    \item[\(1 \implies 2\)] Trebuie să construim o relație de echivalență invariantă la dreapta plecând de la ipoteza că limbajul este regulat.
+    Fie \(M = (Q, \Sigma, \delta, q_0, F)\) un DFA care acceptă limbajul \(L\). Din acesta construim \(M'\), eliminând stările inaccesibile și completând automatul, care în continuare acceptă limbajul \(L\).
+    Considerăm \(\dfaequiv[M']\), pentru care am demonstrat că este relație de echivalență și invariantă la dreapta.
+    Vrem să demonstră că reuniunea claselor de echivalență asociate lui \(\dfaequiv[M']\) .
+    \item[\(2 \implies 3\)]
+    \item[\(3 \implies 1\)]
+\end{itemize}
+\end{proof}
+
+\end{document}

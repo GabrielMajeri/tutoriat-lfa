@@ -1,0 +1,174 @@
+\documentclass{article}
+
+\usepackage{fontspec}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{romanian}
+
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{amsthm}
+\usepackage{unicode-math}
+
+\usepackage{caption}
+\usepackage{tikz}
+
+\usepackage{titling}
+\setlength{\droptitle}{-5em}
+
+\title{Decidabilitate pentru limbaje independente de context}
+\author{}
+\date{}
+
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+\newcommand{\naturals}{\symbb{N}}
+\DeclareMathOperator{\rank}{rank}
+
+\begin{document}
+
+\maketitle
+
+Fie \(G\) o gramatică independentă de context, \(G = (N, T, S, P)\), unde \(N\) este mulțimea neterminalelor, \(T\) este mulțimea terminalelor, \(S\) este simbolul de start și \(P\) este mulțimea producțiilor.
+
+Vrem să găsim algoritmi care să determine dacă:
+
+\begin{enumerate}
+    \item \(L(G) = \emptyset\)
+    \begin{proof}
+    Construim mulțimea \(V\) a neterminalelor \emph{utile}, adică care pot produce cel puțin un cuvânt. Această mulțime este reuniunea tuturor \(V_i, i \in \naturals\), mulțimea neterminalelor care produc un cuvânt în cel mult \(i\) pași intermediari.
+    
+    În \(V_0\) se află neterminalele care au cel puțin o regulă care produce direct un cuvânt:
+    \[
+        V_0 = \Set{ X \in N | \exists (X \to \alpha) \in P, \alpha \in T^* }
+    \]
+    
+    Construim iterativ celelalte mulțimi. Ne folosim de faptul că știm care sunt neterminalele care produc un cuvânt în cel mult \(i\) pași pentru a determina neterminalele care produc un cuvânt în cel mult \(i + 1\) pași.
+    \[
+        V_{i + 1} = V_i \cup \Set{ X \in N | \exists (X \to \alpha) \in P, \alpha \in (T \cup V_i)^* }
+    \]
+    
+    Algoritmul se oprește în momentul când \(V_{i + 1} = V_i\), adică când nu mai putem adăuga niciun neterminal la mulțimea \(V\). Deoarece gramatica are un număr finit de neterminale și de producții, știm că nu poate să continue la infinit acest proces. 
+    
+    În acest moment, verificăm dacă \(S \in V\); dacă da, atunci gramatica produce cel puțin un cuvânt; altfel, limbajul gramaticii este \(\emptyset\).
+    \end{proof}
+    \item \(L(G)\) finit sau infinit
+    \begin{proof}
+    Aducem \(G\) la forma normală Chomsky, pe care o notăm \(G' = (N', T, S, P')\); noua gramatică are același limbaj cu gramatica inițială, cu excepția faptului că nu îl conține pe \(\lambda\): \(L(G') = L(G) - \Set{\lambda}\).
+    
+    Construim graful corespunzător gramaticii \(G'\) în felul următor: nodurile sunt neterminalele \(N'\); muchia \((A, B)\) există dacă avem o regulă care produce \(B\) din \(A\), adică \(\exists A \to \alpha B \beta \in P'\), \(\alpha, \beta \in (N' \cup T)^*\).
+    
+    Deoarece \(G'\) este în formă normală Chomsky, orice producție conține fie un singur neterminal, fie exact două neterminale, deci condiția de a exista muchie de la \(A\) la \(B\) și \(C\) se reduce la \(\exists A \to B C \in P'\) sau \(\exists A \to C B \in P'\).
+    
+    \begin{figure}[ht]
+        \centering
+        \caption*{\textbf{Exemplu}: \(A \to BC \in P'\) devine}
+        \begin{tikzpicture}
+            \node[circle] (A) at (0, 0) {A};
+            \node[circle] (B) at (1.5, 0.5) {B};
+            \node[circle] (C) at (1.5, -0.5) {C};
+            
+            \path [->] (A) edge node {} (B);
+            \path [->] (A) edge node {} (C);
+        \end{tikzpicture}
+    \end{figure}
+    
+    Vrem să demonstrăm că \(L(G')\) este finit dacă și numai dacă graful nu are cicluri.
+    
+    \begin{itemize}
+        \item[\(\impliedby\)] Presupunem că graful nu are cicluri.
+        
+        Pentru orice nonterminal \(A\), notăm cu \(\rank A\) lungimea celui mai lung drum pe care îl putem parcurge în graf, plecând din nodul \(A\). Această valoare este sigur finită, pentru că am presupus că graful este aciclic.
+        
+        Observăm că pe măsură ce parcurgem graful, lungime drumurilor posibile se tot scurtează, deci rangurile nodurilor care apar pot doar să descrească. Dacă avem \(A \to B C \in P'\), atunci \(\rank A > \rank B\) și \(\rank A > \rank C\).
+        
+        Încercăm să găsim o limită superioară a lungimii unui cuvânt obținut din \(A\), în funcție de rangul acestui neterminal. Ne gândim cum ar arăta arborele de derivare al unui cuvânt de lungime maximă. Deoarece lucrăm cu forma normală Chomsky, la fiecare producție aleasă, fie înlocuim un neterminal cu un terminal, fie cu două neterminale.
+
+        În cel mai rău caz, toate producțiile alese vor produce două neterminale, și la ultimul pas înlocuim neterminalele cu terminale. Deci, obținem un cuvânt de lungime maximă când arborele de derivare este un arbore binar complet. Înălțimea acestui arbore este \(\rank A\).
+                
+        \begin{figure}[!hb]
+            \centering
+            \caption*{Cuvintele au lungime maximă când arborele de derivare este complet}
+            \begin{tikzpicture}
+                \node[circle] (A) at (0, 0) {A};
+                
+                \node[circle] (B) at (1.5, 0.5) {B};
+                \node[circle] (C) at (1.5, -0.5) {C};
+                
+                \node[circle] (D) at (3, 0.75) {D};
+                \node[circle] (E) at (3, 0.25) {E};
+                \node[circle] (F) at (3, -0.25) {F};
+                \node[circle] (G) at (3, -0.75) {G};
+                
+                \node[circle] (Ta) at (4, 0.75) {a};
+                \node[circle] (Tb) at (4, 0.25) {b};
+                \node[circle] (Tc) at (4, -0.25) {c};
+                \node[circle] (Td) at (4, -0.75) {d};
+                
+                \path [->] (A) edge node {} (B);
+                \path [->] (A) edge node {} (C);
+                
+                \path [->] (B) edge node {} (D);
+                \path [->] (B) edge node {} (E);
+                \path [->] (C) edge node {} (F);
+                \path [->] (C) edge node {} (G);
+                
+                \path [->] (D) edge node {} (Ta);
+                \path [->] (E) edge node {} (Tb);
+                \path [->] (F) edge node {} (Tc);
+                \path [->] (G) edge node {} (Td);
+            \end{tikzpicture}
+        \end{figure}
+    
+        Vrem să demonstrăm că lungimea maximă a unui șir derivat din \(A\) este cel mult \(2^{\rank A}\).
+        Cu alte cuvinte, \(\rank A = n \in \naturals^*\) dacă și numai dacă \(\exists w \in (N' \cup T)^*\) cu \(A \Rightarrow^* w\) și \(\abs{w} \leq 2^n\).
+        
+        Demonstrăm acest lucru prin inducție:
+        \begin{itemize}
+            \item[\textbf{Cazul de bază:}] Luăm \(n = 0\). Fie \(A\) cu \(\rank A = 1\). \(A\) sigur are o producție, deoarece apare în FNC. Singura posibilitate este să avem o producție de forma \(A \to a, a \in T\).
+            
+            Propoziția este adevărată: \(\abs{a} = 1 = 2^0\).
+            
+            \item[\textbf{Pasul inductiv:}] Presupunem că proprietatea este adevărată pentru orice \(k < n\). Fie \(A\) un neterminal cu \(\rank A = n\). Fie \(w\) un șir de simboluri care se poate obține din \(A\) (\(A \Rightarrow^* w\)) într-un număr de pași.
+            
+            Dacă primul pas este \(A \to a, a \in T\), atunci \(\abs{w} = 1\) și inegalitatea se păstrează.
+            
+            Altfel, avem o producție de forma \(A \to B C\). Pe baza observației de mai sus, știm că \(\rank B < \rank A\) și \(\rank C < \rank A\), deci putem aplica ipoteza de inducție.
+            
+            Fie \(w = w_1 w_2\), cu \(B \Rightarrow^* w_1\) și \(C \Rightarrow^* w_2\). Avem că
+            \begin{align*}
+                \abs{w} &= \abs{w_1} + \abs{w_2} \\
+                &\leq 2^{\rank B} + 2^{\rank C} \\
+                &\leq 2^{(\rank A) - 1} + 2^{(\rank A) - 1} \\
+                &\leq 2^{\rank A}
+            \end{align*}
+        \end{itemize}
+        
+        Dacă aplicăm proprietatea demonstrată pentru \(S\) (care are rangul maxim), obținem că orice cuvânt produs de gramatică are lungimea cel mult \(2^{\rank S}\). Deci limbajul este finit.
+        
+        Mai mult, dacă alfabetul este finit, putem să dăm și o limită superioară pentru mărimea limbajului. Dacă alfabetul are \(\abs{T}\) litere, numărul maxim posibil de cuvinte este
+        \[
+            \abs{L(G')} \leq \abs{T}^{2^{\rank S}}
+        \]
+        
+        \item[\(\implies\)] În loc să demonstrăm direct implicația inversă (dacă \(L(G')\) este finit atunci graful nu are cicluri), vom demonstra contrapozitiva: presupunem că graful are cicluri, și demonstrăm că este infinit.
+        
+        Dacă graful are un ciclu, înseamnă că există un neterminal \(A\) din care putem pleca și derivăm un șir în care apare din nou \(A\). Deci \(A \Rightarrow^+ \alpha A \beta\), cu \(\alpha, \beta \in (N' \cup T)^*\).
+        
+        Deoarece gramatica este în formă normală Chomsky, \(\abs{\alpha \beta} \geq 1\). La un moment dat, am avut cel puțin o producție de forma \(A \to BA\) sau \(A \to AB\), care a crescut lungimea șirului obținut.
+        
+        Acum putem cicla, plecând din noul \(A\) și alegând aceleași producții. Aplicând acest proces de \(k\) ori, obținem
+        \[
+            A \Rightarrow^+ \alpha A \beta
+            \Rightarrow^+ \alpha \alpha A \beta \beta
+            \Rightarrow^+ \dots
+            \Rightarrow^+ \alpha^k A \beta^k
+        \]
+        cu \(\abs{\alpha^k \beta^k} \geq k\), pentru orice \(k \in \naturals^*\).
+        
+        Putem obține o infinitate de cuvinte în acest fel, deci \(L(G')\) este infinit.
+    \end{itemize}
+    \end{proof}
+\end{enumerate}
+
+\end{document}
